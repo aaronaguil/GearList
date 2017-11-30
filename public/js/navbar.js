@@ -1,5 +1,5 @@
 var user = {};
-// hello world! i am thomas.
+
 window.onload = function () {
     // set logout and My Account to hidden
 

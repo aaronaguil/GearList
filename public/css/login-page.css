@@ -1,0 +1,23 @@
+.login-form-container{
+	/* margin-top: 10%; */
+}
+
+
+
+.login-form{
+	border: 1px solid black;
+}
+
+.login-fields{
+	margin: 5%;
+}
+
+.company-name-login-form{
+	text-align: center;
+	font-weight: bold;
+	font-size: 2em;
+}
+
+.error-messages{
+	color: red;
+}

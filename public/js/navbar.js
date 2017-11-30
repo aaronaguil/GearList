@@ -25,24 +25,43 @@ window.onload = function () {
 var login = function () {
 
     console.log("in login")
-        var username = document.getElementById('username-input').value;
-        console.log(username)
-        var password = document.getElementById('password-input').value;
+    var username = document.getElementById('username-input').value;
+    console.log(username)
+    var password = document.getElementById('password-input').value;
 
-    
-        var user = {
-            'username': username,
-            'password': password,
-            'email': email,
-            'firstname': firstname,
-            'lastname': lastname
-        }
-        console.log("new test: " + JSON.stringify(newUser))
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open("POST", "/auth/login/", true); // false for synchronous request
-        xmlHttp.setRequestHeader("Content-Type", "application/json");
-        xmlHttp.send(JSON.stringify(user));
-        console.log(xmlHttp.status)
+    var user = {
+        'username': username,
+        'password': password,
+    }
+
+    console.log("new test: " + JSON.stringify(user))
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", "/auth/login/", false); // false for synchronous request
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(JSON.stringify(user));
+    console.log(xmlHttp.status)
+    console.log(xmlHttp.responseText)
+
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid') {
+        var logoutButton = document.getElementById('logout-button');
+        var myAccountDropdown = document.getElementById('my-account-dropdown');
+        logoutButton.setAttribute('style', '');
+        myAccountDropdown.setAttribute('style', '');
+
+        var loginButton = document.getElementById('login-button');
+        var registerButton = document.getElementById('register-button');
+        loginButton.setAttribute('style', 'display: none');
+        registerButton.setAttribute('style', 'display: none');
+    }
+    else if(xmlHttp.responseText == 'invalid'){
+        var userNameDiv = document.getElementById('usernameDiv');
+        
+        var error = document.createElement('div');
+        error.setAttribute('style', 'color: red; text-align: left');
+        error.innerText = "Invalid Username or Password";
+
+        userNameDiv.prepend(error);
+    }
 
 }
 
@@ -64,6 +83,7 @@ var loginForm = function () {
     console.log(form)
     var userNameDiv = document.createElement('div')
     userNameDiv.setAttribute('class', 'input-group');
+    userNameDiv.setAttribute('id', 'usernameDiv');
     userNameDiv.setAttribute('style', 'width: 100%');
     var userNameInput = document.createElement('input')
     userNameInput.setAttribute('placeholder', 'Username')
@@ -73,11 +93,12 @@ var loginForm = function () {
     userNameInput.setAttribute('class', 'form-control input-lg')
     userNameInput.setAttribute('id', 'username-input');
     userNameInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
     var passwordDiv = document.createElement('div')
     passwordDiv.setAttribute('class', 'input-group');
+    passwordDiv.setAttribute('id', 'passwordDiv');
     passwordDiv.setAttribute('style', 'width: 100%');
-    
+
     var passwordInput = document.createElement('input')
     passwordInput.setAttribute('placeholder', 'Password')
     passwordInput.setAttribute('type', 'text')
@@ -86,8 +107,8 @@ var loginForm = function () {
     passwordInput.setAttribute('class', 'form-control input-lg')
     passwordInput.setAttribute('id', 'password-input');
     passwordInput.setAttribute('style', 'margin-bottom: 5%');
-    
-    
+
+
 
     var submitButton = document.createElement('button')
     submitButton.setAttribute('type', 'submit')
@@ -130,6 +151,7 @@ var registerForm = function () {
     console.log(form)
     var userNameDiv = document.createElement('div')
     userNameDiv.setAttribute('class', 'input-group');
+    userNameDiv.setAttribute('id', 'usernameDiv');
     userNameDiv.setAttribute('style', 'width: 100%');
     var userNameInput = document.createElement('input')
     userNameInput.setAttribute('placeholder', 'Username')
@@ -139,11 +161,12 @@ var registerForm = function () {
     userNameInput.setAttribute('class', 'form-control input-lg')
     userNameInput.setAttribute('id', 'username-input');
     userNameInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
     var passwordDiv = document.createElement('div')
     passwordDiv.setAttribute('class', 'input-group');
+    passwordDiv.setAttribute('id', 'passwordDiv');
     passwordDiv.setAttribute('style', 'width: 100%');
-    
+
     var passwordInput = document.createElement('input')
     passwordInput.setAttribute('placeholder', 'Password')
     passwordInput.setAttribute('type', 'text')
@@ -152,11 +175,12 @@ var registerForm = function () {
     passwordInput.setAttribute('class', 'form-control input-lg')
     passwordInput.setAttribute('id', 'password-input');
     passwordInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
     var emailDiv = document.createElement('div')
     emailDiv.setAttribute('class', 'input-group');
+    emailDiv.setAttribute('id', 'emailDiv');
     emailDiv.setAttribute('style', 'width: 100%');
-    
+
     var emailInput = document.createElement('input')
     emailInput.setAttribute('placeholder', 'Email')
     emailInput.setAttribute('type', 'text')
@@ -165,11 +189,12 @@ var registerForm = function () {
     emailInput.setAttribute('class', 'form-control input-lg')
     emailInput.setAttribute('id', 'email-input');
     emailInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
     var firstNameDiv = document.createElement('div')
     firstNameDiv.setAttribute('class', 'input-group');
+    firstNameDiv.setAttribute('id', 'firstnameDiv');
     firstNameDiv.setAttribute('style', 'width: 100%');
-    
+
     var firstNameInput = document.createElement('input')
     firstNameInput.setAttribute('placeholder', 'First Name')
     firstNameInput.setAttribute('type', 'text')
@@ -178,11 +203,12 @@ var registerForm = function () {
     firstNameInput.setAttribute('class', 'form-control input-lg')
     firstNameInput.setAttribute('id', 'firstname-input');
     firstNameInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
     var lastNameDiv = document.createElement('div')
     lastNameDiv.setAttribute('class', 'input-group');
+    lastNameDiv.setAttribute('id', 'lastnameDiv');
     lastNameDiv.setAttribute('style', 'width: 100%');
-    
+
     var lastNameInput = document.createElement('input')
     lastNameInput.setAttribute('placeholder', 'Last Name')
     lastNameInput.setAttribute('type', 'text')
@@ -191,7 +217,7 @@ var registerForm = function () {
     lastNameInput.setAttribute('class', 'form-control input-lg')
     lastNameInput.setAttribute('id', 'lastname-input');
     lastNameInput.setAttribute('style', 'margin-bottom: 5%');
-    
+
 
     var submitButton = document.createElement('button')
     submitButton.setAttribute('type', 'submit')
@@ -243,12 +269,26 @@ var register = function () {
         'firstname': firstname,
         'lastname': lastname
     }
+
     console.log("new test: " + JSON.stringify(newUser))
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/auth/register/", true); // false for synchronous request
+    xmlHttp.open("POST", "/auth/register/", false); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(newUser));
-    
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'not unique') {
+        console.log('valid')
+    }
+    else if (xmlHttp.responseText == 'not unique') {
+        var usernameDiv = document.getElementById('usernameDiv');
+
+        var error = document.createElement('div');
+        error.setAttribute('style', 'color: red; text-align: left;');
+        error.innerText = 'username is already taken'
+
+        usernameDiv.prepend(error);
+    }
+
+
 
 
 }

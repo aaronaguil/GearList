@@ -36,15 +36,25 @@ exports.createUser = function (req, res) {
                 + date + "')",
                 function (err, result) {
                     if (err) throw err
-
+                   
                 })
+                var strUser = JSON.stringify(req.body);
+                console.log("strUser: " + strUser)
+                console.log("strUser.username: " + strUser.username)
+                var user = JSON.parse(strUser);
+                console.log("user: " + user)
+                console.log("user.username: " + user.username)
+                res.send(user)
+
         }
         else if(result.length > 0){
             console.log("****************************" + err);
+            res.send('not unique')
         }
         else if(err){
 
         }
+        
 
         // res.render('index', { user: user });
 
@@ -63,12 +73,22 @@ exports.login = function (req, res) {
 
     connection.query("SELECT * FROM USER WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "'; ",
         function (err, result) {
-            if (err) {
-                console.log("****************************" + err);
+            if (result.length == 0) {
+                console.log("****************************" + result.length);
+                var str = JSON.stringify(result);
+                console.log("str: " + JSON.stringify(str))
+                var resultJSON = JSON.parse(str);
+                console.log(resultJSON)
+                res.send('invalid')
             }
-            else {
-                
+            else if (result.length > 0) {
+                var str = JSON.stringify(result);
+                console.log("str: " + JSON.stringify(str))
+                var resultJSON = JSON.parse(str);
+                console.log(resultJSON)
+                res.send(resultJSON)
             }
+            
         })
 
 

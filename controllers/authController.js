@@ -15,10 +15,9 @@ exports.login = function(req, res){
 
 exports.getUser = function(req, res){
    dao.getUser(req, res);
-        console.log("user in authController: ");
-        // res.render('index');
-       
+   console.log("user in authController: ");
 
+    // res.render('index');
     // console.log('in controller: ' + user);
     // res.render('index', user);
 }

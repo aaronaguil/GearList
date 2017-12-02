@@ -1,76 +1,91 @@
 var user = {};
 
 window.onload = function () {
-    // set logout and My Account to hidden
 
-
-    var logoutButton = document.getElementById('logout-button');
     var myAccountDropdown = document.getElementById('my-account-dropdown');
-    console.log(logoutButton)
-    logoutButton.setAttribute('style', 'display: none');
     myAccountDropdown.setAttribute('style', 'display: none');
-
-    console.log(logoutButton)
-    var loginButton = document.getElementById('login-button');
-    loginButton.addEventListener("click", loginForm);
-    console.log(logoutButton);
-    var registerButton = document.getElementById('register-button');
+    console.log("account dropdown: " + myAccountDropdown);
+    
+    var loginButton = document.getElementById('loginModal-submitButton');
+    loginButton.addEventListener("click", login);
+    console.log("login button: " + loginButton);
+    
+    var registerButton = document.getElementById('registerModal-submitButton');
+    registerButton.addEventListener("click", register);
     console.log("register button: " + registerButton)
-    registerButton.addEventListener("click", registerForm);
-
+ 
+    var logoutButton = document.getElementById('logout-button');
     logoutButton.addEventListener("click", logout)
+    logoutButton.setAttribute('style', 'display: none');
+    console.log(logoutButton)
 
     var createPostButton = document.getElementById('createPostButton');
     console.log(createPostButton);
     createPostButton.addEventListener("click", createPostForm);
+
+    var homeButton = document.getElementById('homeButton');
+    console.log(homeButton);
+    homeButton.addEventListener("click", goHome);
     
 }
 
 var login = function () {
-
-    console.log("in login")
-    var username = document.getElementById('username-input').value;
-    console.log(username)
-    var password = document.getElementById('password-input').value;
-
+    console.log("in login");
+    
+    var username = document.getElementById('loginModal-usernameInput').value;
+    var password = document.getElementById('loginModal-passwordInput').value;
+    console.log(username);
+    console.log(password);
+    
     var user = {
         'username': username,
         'password': password,
     }
-
-    console.log("new test: " + JSON.stringify(user))
+    
+    console.log("new test: " + JSON.stringify(user));
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/auth/login/", false); // false for synchronous request
+    xmlHttp.open("POST", "/auth/login", false); // false for synchronous request [DEPRECATED]
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(user));
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
-
-    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid') {
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
         var logoutButton = document.getElementById('logout-button');
         var myAccountDropdown = document.getElementById('my-account-dropdown');
-        logoutButton.setAttribute('style', '');
-        myAccountDropdown.setAttribute('style', '');
-
         var loginButton = document.getElementById('login-button');
         var registerButton = document.getElementById('register-button');
+        logoutButton.setAttribute('style', '');
+        myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
+    } else if(xmlHttp.responseText == 'invalid'){
+        var errorMessage = document.getElementById('loginModal-errorMessage');
+        errorMessage.setAttribute('style', '');
     }
-    else if(xmlHttp.responseText == 'invalid'){
-        var userNameDiv = document.getElementById('usernameDiv');
-        
-        var error = document.createElement('div');
-        error.setAttribute('style', 'color: red; text-align: left');
-        error.innerText = "Invalid Username or Password";
+}
 
-        userNameDiv.prepend(error);
-    }
+var setAllNavBarButtonsInactive = function() {
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', '');
+    var createPostButton = document.getElementById('createPostButton');
+    createPostButton.setAttribute('class', '');
+    var loginButton = document.getElementById('login-button');
+    loginButton.setAttribute('class', '');
+    var registerButton = document.getElementById('register-button');
+    registerButton.setAttribute('class', '');
+}
 
+var goHome = function() {
+    setAllNavBarButtonsInactive();
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', 'active');
+    var bodyContainer = document.getElementById('body-container');
+    bodyContainer.innerHTML = '';
 }
 
 var createPostForm = function(event) {
     var createPostButton = document.getElementById('createPostButton');
+    setAllNavBarButtonsInactive();
     createPostButton.setAttribute('class', 'active');
     var homeButton = document.getElementById('homeButton');
     homeButton.setAttribute('class', '');
@@ -119,202 +134,16 @@ var submitPost = function(event) {
     }
 }
 
-var loginForm = function () {
-    console.log('in loginForm')
-    var bodyContainer = document.getElementById('body-container');
-    bodyContainer.innerHTML = '';
-    bodyContainer.setAttribute('class', 'container-fluid');
-    bodyContainer.setAttribute('style', 'margin-top: 15%');
-    var rowOne = document.createElement('div');
-    rowOne.setAttribute('class', 'row');
-    var formContainer = document.createElement('div');
-    formContainer.setAttribute('class', '');
-    formContainer.setAttribute('style', 'width: 50%; margin-left: 25%;');
-
-
-    var form = document.createElement('form');
-    form.setAttribute('style', 'text-align : center');
-    console.log(form)
-    var userNameDiv = document.createElement('div')
-    userNameDiv.setAttribute('class', 'input-group');
-    userNameDiv.setAttribute('id', 'usernameDiv');
-    userNameDiv.setAttribute('style', 'width: 100%');
-    var userNameInput = document.createElement('input')
-    userNameInput.setAttribute('placeholder', 'Username')
-    userNameInput.setAttribute('type', 'text')
-    userNameInput.setAttribute('name', 'username')
-    userNameInput.setAttribute('aria-describedby', 'basic-addon1')
-    userNameInput.setAttribute('class', 'form-control input-lg')
-    userNameInput.setAttribute('id', 'username-input');
-    userNameInput.setAttribute('style', 'margin-bottom: 5%');
-
-    var passwordDiv = document.createElement('div')
-    passwordDiv.setAttribute('class', 'input-group');
-    passwordDiv.setAttribute('id', 'passwordDiv');
-    passwordDiv.setAttribute('style', 'width: 100%');
-
-    var passwordInput = document.createElement('input')
-    passwordInput.setAttribute('placeholder', 'Password')
-    passwordInput.setAttribute('type', 'text')
-    passwordInput.setAttribute('name', 'username')
-    passwordInput.setAttribute('aria-describedby', 'basic-addon1')
-    passwordInput.setAttribute('class', 'form-control input-lg')
-    passwordInput.setAttribute('id', 'password-input');
-    passwordInput.setAttribute('style', 'margin-bottom: 5%');
-
-
-
-    var submitButton = document.createElement('button')
-    submitButton.setAttribute('type', 'submit')
-    submitButton.setAttribute('class', 'btn btn-primary')
-
-    submitButton.innerText = 'Login'
-    submitButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        login();
-    })
-
-    userNameDiv.append(userNameInput);
-    passwordDiv.append(passwordInput);
-
-    form.append(userNameDiv);
-    form.append(passwordDiv);
-    form.append(submitButton);
-
-    formContainer.append(form);
-    rowOne.append(formContainer);
-    bodyContainer.append(rowOne);
-
-}
-
-var registerForm = function () {
-    console.log('in registerform')
-    var bodyContainer = document.getElementById('body-container');
-    bodyContainer.innerHTML = '';
-    bodyContainer.setAttribute('class', 'container-fluid');
-    bodyContainer.setAttribute('style', 'margin-top: 15%')
-    var rowOne = document.createElement('div');
-    rowOne.setAttribute('class', 'row');
-    var formContainer = document.createElement('div');
-    formContainer.setAttribute('class', '');
-    formContainer.setAttribute('style', 'width: 50%; margin-left: 25%;');
-
-
-    var form = document.createElement('form');
-    form.setAttribute('style', 'text-align : center');
-    console.log(form)
-    var userNameDiv = document.createElement('div')
-    userNameDiv.setAttribute('class', 'input-group');
-    userNameDiv.setAttribute('id', 'usernameDiv');
-    userNameDiv.setAttribute('style', 'width: 100%');
-    var userNameInput = document.createElement('input')
-    userNameInput.setAttribute('placeholder', 'Username')
-    userNameInput.setAttribute('type', 'text')
-    userNameInput.setAttribute('name', 'username')
-    userNameInput.setAttribute('aria-describedby', 'basic-addon1')
-    userNameInput.setAttribute('class', 'form-control input-lg')
-    userNameInput.setAttribute('id', 'username-input');
-    userNameInput.setAttribute('style', 'margin-bottom: 5%');
-
-    var passwordDiv = document.createElement('div')
-    passwordDiv.setAttribute('class', 'input-group');
-    passwordDiv.setAttribute('id', 'passwordDiv');
-    passwordDiv.setAttribute('style', 'width: 100%');
-
-    var passwordInput = document.createElement('input')
-    passwordInput.setAttribute('placeholder', 'Password')
-    passwordInput.setAttribute('type', 'text')
-    passwordInput.setAttribute('name', 'username')
-    passwordInput.setAttribute('aria-describedby', 'basic-addon1')
-    passwordInput.setAttribute('class', 'form-control input-lg')
-    passwordInput.setAttribute('id', 'password-input');
-    passwordInput.setAttribute('style', 'margin-bottom: 5%');
-
-    var emailDiv = document.createElement('div')
-    emailDiv.setAttribute('class', 'input-group');
-    emailDiv.setAttribute('id', 'emailDiv');
-    emailDiv.setAttribute('style', 'width: 100%');
-
-    var emailInput = document.createElement('input')
-    emailInput.setAttribute('placeholder', 'Email')
-    emailInput.setAttribute('type', 'text')
-    emailInput.setAttribute('name', 'username')
-    emailInput.setAttribute('aria-describedby', 'basic-addon1')
-    emailInput.setAttribute('class', 'form-control input-lg')
-    emailInput.setAttribute('id', 'email-input');
-    emailInput.setAttribute('style', 'margin-bottom: 5%');
-
-    var firstNameDiv = document.createElement('div')
-    firstNameDiv.setAttribute('class', 'input-group');
-    firstNameDiv.setAttribute('id', 'firstnameDiv');
-    firstNameDiv.setAttribute('style', 'width: 100%');
-
-    var firstNameInput = document.createElement('input')
-    firstNameInput.setAttribute('placeholder', 'First Name')
-    firstNameInput.setAttribute('type', 'text')
-    firstNameInput.setAttribute('name', 'username')
-    firstNameInput.setAttribute('aria-describedby', 'basic-addon1')
-    firstNameInput.setAttribute('class', 'form-control input-lg')
-    firstNameInput.setAttribute('id', 'firstname-input');
-    firstNameInput.setAttribute('style', 'margin-bottom: 5%');
-
-    var lastNameDiv = document.createElement('div')
-    lastNameDiv.setAttribute('class', 'input-group');
-    lastNameDiv.setAttribute('id', 'lastnameDiv');
-    lastNameDiv.setAttribute('style', 'width: 100%');
-
-    var lastNameInput = document.createElement('input')
-    lastNameInput.setAttribute('placeholder', 'Last Name')
-    lastNameInput.setAttribute('type', 'text')
-    lastNameInput.setAttribute('name', 'username')
-    lastNameInput.setAttribute('aria-describedby', 'basic-addon1')
-    lastNameInput.setAttribute('class', 'form-control input-lg')
-    lastNameInput.setAttribute('id', 'lastname-input');
-    lastNameInput.setAttribute('style', 'margin-bottom: 5%');
-
-
-    var submitButton = document.createElement('button')
-    submitButton.setAttribute('type', 'submit')
-    submitButton.setAttribute('class', 'btn btn-primary')
-
-    submitButton.innerText = 'Register'
-    submitButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        register();
-    })
-
-    userNameDiv.append(userNameInput);
-    passwordDiv.append(passwordInput);
-    emailDiv.append(emailInput);
-    firstNameDiv.append(firstNameInput);
-    lastNameDiv.append(lastNameInput);
-
-    form.append(userNameDiv);
-    form.append(passwordDiv);
-    form.append(emailDiv);
-    form.append(firstNameDiv);
-    form.append(lastNameDiv);
-    form.append(submitButton);
-
-
-
-    formContainer.append(form);
-    rowOne.append(formContainer);
-    bodyContainer.append(rowOne);
-
-}
-
 var register = function () {
 
-    console.log("in register")
+    console.log("****IN navbar.js REGISTER****")
 
-
-    var username = document.getElementById('username-input').value;
+    var username = document.getElementById('registerModal-usernameInput').value;
     console.log(username)
-    var password = document.getElementById('password-input').value;
-    var email = document.getElementById('email-input').value;
-    var firstname = document.getElementById('firstname-input').value;
-    var lastname = document.getElementById('lastname-input').value;
+    var password = document.getElementById('registerModal-passwordInput').value;
+    var email = document.getElementById('registerModal-emailInput').value;
+    var firstname = document.getElementById('registerModal-firstNameInput').value;
+    var lastname = document.getElementById('registerModal-lastNameInput').value;
 
     var newUser = {
         'username': username,
@@ -329,22 +158,26 @@ var register = function () {
     xmlHttp.open("POST", "/auth/register/", false); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(newUser));
-    if (xmlHttp.status == '200' && xmlHttp.responseText != 'not unique') {
-        console.log('valid')
+    var errorMessageSelector = '[id^="registerModal-errorMessage-"]';
+    var successMessageSelector = '[id^="registerModal-successMessage-"]';
+    if (xmlHttp.status == '200' /*&& xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username'*/) {
+        console.log('In navbar.js - valid registration form, user created.')
+        hideMatchingElements(errorMessageSelector);
+        var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
+        successMessage.setAttribute('style', '');
+    } else if (xmlHttp.responseText == 'Prexisting email address') {
+        console.log('In navbar.js - invalid registration form, prexisting email address, message displayed')
+        hideMatchingElements(errorMessageSelector);
+        hideMatchingElements(successMessageSelector);
+        var prexistingEmailMessage = document.getElementById('registerModal-errorMessage-prexistingEmail');
+        prexistingEmailMessage.setAttribute('style', '');
+    } else if (xmlHttp.responseText == 'Prexisting username') {
+        console.log('In navbar.js - invalid registration form, prexisting username, message displayed')
+        hideMatchingElements(errorMessageSelector);
+        hideMatchingElements(successMessageSelector);
+        var prexistingUsernameMessage = document.getElementById('loginModal-errorMessage-prexistingUsername');
+        prexistingUsernameMessage.setAttribute('style', '');
     }
-    else if (xmlHttp.responseText == 'not unique') {
-        var usernameDiv = document.getElementById('usernameDiv');
-
-        var error = document.createElement('div');
-        error.setAttribute('style', 'color: red; text-align: left;');
-        error.innerText = 'username is already taken'
-
-        usernameDiv.prepend(error);
-    }
-
-
-
-
 }
 
 var logout = function () {
@@ -360,4 +193,14 @@ var logout = function () {
     registerButton.setAttribute('style', '');
 
 }
+
+var hideMatchingElements = function (idRegex) {
+    var listOfElements = document.querySelectorAll(idRegex);
+    for (var element of listOfElements) {
+        element.setAttribute('style', 'display: none');
+    }
+}
+
+
+
 

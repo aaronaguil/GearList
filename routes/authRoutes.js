@@ -5,7 +5,7 @@ var authController = require('../controllers/authController');
 
 
 router.post('/auth/register', function (req, res) {
-    console.log('in /auth/register')
+    console.log('****IN authRoutes.js /auth/register****')
     console.log('username: ' + req.body.username)
     console.log('password: ' + req.body.password)
     console.log('email: ' + req.body.email)
@@ -17,7 +17,7 @@ router.post('/auth/register', function (req, res) {
 })
 
 router.post('/auth/login', function (req, res) {
-    console.log('in /auth/login');
+    console.log('****IN authRoutes.js /auth/login****')
     authController.login(req, res);
     
 })

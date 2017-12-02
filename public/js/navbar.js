@@ -20,10 +20,6 @@ window.onload = function () {
 
     logoutButton.addEventListener("click", logout)
 
-    var createPostButton = document.getElementById('createPostButton');
-    console.log(createPostButton);
-    createPostButton.addEventListener("click", createPostForm);
-    
 }
 
 var login = function () {
@@ -69,53 +65,12 @@ var login = function () {
 
 }
 
-var createPostForm = function(event) {
-    console.log('in createPostForm');
-    var bodyContainer = document.getElementById('body-container');
-    bodyContainer.innerHTML = '';
-
-    var titleInputBox = document.createElement('input');
-    titleInputBox.setAttribute('placeholder', 'Title')
-    titleInputBox.setAttribute('type', 'text')
-    titleInputBox.setAttribute('id', 'titleInputBox');
-
-    var descriptionInputBox = document.createElement('input');
-    descriptionInputBox.setAttribute('placeholder', 'Description')
-    descriptionInputBox.setAttribute('type', 'text')
-    descriptionInputBox.setAttribute('id', 'descriptionInputBox');
-
-    var submitPostButton = document.createElement('button');
-    submitPostButton.innerText = 'Post!';
-    submitPostButton.addEventListener('click', submitPost);
-    
-    bodyContainer.append(titleInputBox);
-    bodyContainer.append(descriptionInputBox);
-    bodyContainer.append(submitPostButton);
-    
-    //var form = document.createElement('form');
-}
-
-var submitPost = function(event) {
-    var titleInput = document.getElementById('titleInputBox').value;
-    var descriptionInput = document.getElementById('descriptionInputBox').value;
-    console.log(titleInput);
-    console.log(descriptionInput);
-    var postData = {'title': titleInput,
-                    'description': descriptionInput};
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/post/submit", false); // false for synchronous request
-    xmlHttp.setRequestHeader("Content-Type", "application/json");
-    xmlHttp.send(JSON.stringify(postData));
-    console.log(xmlHttp.status)
-    console.log(xmlHttp.responseText)
-}
-
 var loginForm = function () {
     console.log('in loginForm')
     var bodyContainer = document.getElementById('body-container');
     bodyContainer.innerHTML = '';
     bodyContainer.setAttribute('class', 'container-fluid');
-    bodyContainer.setAttribute('style', 'margin-top: 15%');
+    bodyContainer.setAttribute('style', 'margin-top: 15%')
     var rowOne = document.createElement('div');
     rowOne.setAttribute('class', 'row');
     var formContainer = document.createElement('div');

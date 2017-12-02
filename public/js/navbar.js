@@ -70,7 +70,7 @@ var loginForm = function () {
     var bodyContainer = document.getElementById('body-container');
     bodyContainer.innerHTML = '';
     bodyContainer.setAttribute('class', 'container-fluid');
-    bodyContainer.setAttribute('style', 'margin-top: 15%')
+    bodyContainer.setAttribute('style', 'margin-top: 15%');
     var rowOne = document.createElement('div');
     rowOne.setAttribute('class', 'row');
     var formContainer = document.createElement('div');

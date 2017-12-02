@@ -8,6 +8,10 @@ app.use(express.static(__dirname + '/public'));         // [@aaron COMMENT REQUE
 
 var authRoutes = require('./routes/authRoutes');        // store an object that represents the authroutes fil in var authRoutes
 app.use('', authRoutes);                                // tells the express application object app to look in authRoutes for routing
+
+var postRoutes = require('./routes/postRoutes');
+app.use('', postRoutes);                                
+
 // var gearRoutes = require('./routes/gearRoutes');
 // app.use('/gear/', gearRoutes);
 // var userRoutes = require('./routes/userRoutes');

@@ -70,6 +70,10 @@ var login = function () {
 }
 
 var createPostForm = function(event) {
+    var createPostButton = document.getElementById('createPostButton');
+    createPostButton.setAttribute('class', 'active');
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', '');
     console.log('in createPostForm');
     var bodyContainer = document.getElementById('body-container');
     bodyContainer.innerHTML = '';
@@ -96,6 +100,7 @@ var createPostForm = function(event) {
 }
 
 var submitPost = function(event) {
+    
     var titleInput = document.getElementById('titleInputBox').value;
     var descriptionInput = document.getElementById('descriptionInputBox').value;
     console.log(titleInput);
@@ -107,7 +112,11 @@ var submitPost = function(event) {
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(postData));
     console.log(xmlHttp.status)
-    console.log(xmlHttp.responseText)
+    if (xmlHttp.status == 200) {
+        console.log("");
+        var bodyContainer = document.getElementById('body-container');
+        bodyContainer.innerHTML = '';
+    }
 }
 
 var loginForm = function () {

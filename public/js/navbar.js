@@ -53,15 +53,19 @@ var login = function () {
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
+        console.log("USER LOGGED IN SUCCESSFULLY: " + username);
         var logoutButton = document.getElementById('logout-button');
         var myAccountDropdown = document.getElementById('my-account-dropdown');
         var loginButton = document.getElementById('login-button');
         var registerButton = document.getElementById('register-button');
+        var welcomeMessage = document.getElementById('loginModal-successMessage');
         logoutButton.setAttribute('style', '');
         myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
+        welcomeMessage.setAttribute('style', '');
     } else if(xmlHttp.responseText == 'invalid'){
+        console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
         var errorMessage = document.getElementById('loginModal-errorMessage');
         errorMessage.setAttribute('style', '');
     }
@@ -196,13 +200,14 @@ var logout = function () {
     console.log("logged out")
     var logoutButton = document.getElementById('logout-button');
     var myAccountDropdown = document.getElementById('my-account-dropdown');
-    logoutButton.setAttribute('style', 'display : none');
-    myAccountDropdown.setAttribute('style', 'display : none');
     var loginButton = document.getElementById('login-button');
     var registerButton = document.getElementById('register-button');
+    var welcomeMessage = document.getElementById('loginModal-successMessage');
+    logoutButton.setAttribute('style', 'display : none');
+    myAccountDropdown.setAttribute('style', 'display : none');
     loginButton.setAttribute('style', '');
     registerButton.setAttribute('style', '');
-
+    welcomeMessage.setAttribute('style', 'display: none');
 }
 
 var hideMatchingElements = function (idRegex) {

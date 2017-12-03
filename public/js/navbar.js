@@ -1,6 +1,9 @@
+console.log("***RUNNING NAVBAR.JS****");
+
 var user = {};
 
 window.onload = function () {
+    console.log("****IN navbar.js ONLOAD****");
 
     var myAccountDropdown = document.getElementById('my-account-dropdown');
     myAccountDropdown.setAttribute('style', 'display: none');
@@ -30,7 +33,7 @@ window.onload = function () {
 }
 
 var login = function () {
-    console.log("in login");
+    console.log("****IN navbar.js LOGIN****")
     
     var username = document.getElementById('loginModal-usernameInput').value;
     var password = document.getElementById('loginModal-passwordInput').value;
@@ -65,6 +68,8 @@ var login = function () {
 }
 
 var setAllNavBarButtonsInactive = function() {
+    console.log("****IN navbar.js SETALLNAVBARBUTTONSINACTIVE****");
+    
     var homeButton = document.getElementById('homeButton');
     homeButton.setAttribute('class', '');
     var createPostButton = document.getElementById('createPostButton');
@@ -76,6 +81,8 @@ var setAllNavBarButtonsInactive = function() {
 }
 
 var goHome = function() {
+    console.log("****IN navbar.js GOHOME****");
+    
     setAllNavBarButtonsInactive();
     var homeButton = document.getElementById('homeButton');
     homeButton.setAttribute('class', 'active');
@@ -84,6 +91,8 @@ var goHome = function() {
 }
 
 var createPostForm = function(event) {
+    console.log("****IN navbar.js CREATEPOSTFORM****");
+    
     var createPostButton = document.getElementById('createPostButton');
     setAllNavBarButtonsInactive();
     createPostButton.setAttribute('class', 'active');
@@ -115,6 +124,7 @@ var createPostForm = function(event) {
 }
 
 var submitPost = function(event) {
+    console.log("****IN navbar.js SUBMITPOST****");
     
     var titleInput = document.getElementById('titleInputBox').value;
     var descriptionInput = document.getElementById('descriptionInputBox').value;
@@ -135,8 +145,7 @@ var submitPost = function(event) {
 }
 
 var register = function () {
-
-    console.log("****IN navbar.js REGISTER****")
+    console.log("****IN navbar.js REGISTER****");
 
     var username = document.getElementById('registerModal-usernameInput').value;
     console.log(username)
@@ -160,7 +169,7 @@ var register = function () {
     xmlHttp.send(JSON.stringify(newUser));
     var errorMessageSelector = '[id^="registerModal-errorMessage-"]';
     var successMessageSelector = '[id^="registerModal-successMessage-"]';
-    if (xmlHttp.status == '200' /*&& xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username'*/) {
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username') {
         console.log('In navbar.js - valid registration form, user created.')
         hideMatchingElements(errorMessageSelector);
         var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
@@ -175,12 +184,14 @@ var register = function () {
         console.log('In navbar.js - invalid registration form, prexisting username, message displayed')
         hideMatchingElements(errorMessageSelector);
         hideMatchingElements(successMessageSelector);
-        var prexistingUsernameMessage = document.getElementById('loginModal-errorMessage-prexistingUsername');
+        var prexistingUsernameMessage = document.getElementById('registerModal-errorMessage-prexistingUsername');
         prexistingUsernameMessage.setAttribute('style', '');
     }
 }
 
 var logout = function () {
+    console.log("****IN navbar.js LOGOUT****");
+
     user = {};
     console.log("logged out")
     var logoutButton = document.getElementById('logout-button');
@@ -195,6 +206,8 @@ var logout = function () {
 }
 
 var hideMatchingElements = function (idRegex) {
+    console.log("****IN navbar.js HIDEMATCHINGELEMENTS****");
+    
     var listOfElements = document.querySelectorAll(idRegex);
     for (var element of listOfElements) {
         element.setAttribute('style', 'display: none');

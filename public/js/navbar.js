@@ -151,7 +151,6 @@ var submitPost = function(event) {
     }
 }
 
-<<<<<<< HEAD
 var loginForm = function () {
     console.log('in loginForm')
     var bodyContainer = document.getElementById('body-container');
@@ -337,8 +336,6 @@ var registerForm = function () {
 
 }
 
-=======
->>>>>>> dffb5c98b69cb1f2bf6f61db7dc269aaa979db40
 var register = function () {
     console.log("****IN navbar.js REGISTER****");
 

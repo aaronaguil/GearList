@@ -6,7 +6,7 @@ app.use(bodyParser.urlencoded({extended:true}));        // [@aaron COMMENT REQUE
 app.use(bodyParser.json());                             // Tell body-parser that our communication format is JSON
 app.use(express.static(__dirname + '/public'));         // [@aaron COMMENT REQUEST]
 
-var authRoutes = require('./routes/authRoutes');        // store an object that represents the authroutes fil in var authRoutes
+var authRoutes = require('./routes/authRoutes');        // store an object that represents the authroutes file in var authRoutes
 app.use('', authRoutes);                                // tells the express application object app to look in authRoutes for routing
 
 var postRoutes = require('./routes/postRoutes');

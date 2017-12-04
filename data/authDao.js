@@ -21,51 +21,48 @@ connection.connect(function (err) {
 
 
 exports.createUser = function (req, res) {
-    console.log('****IN DAO CREATE USER***')
+    console.log('****IN authDAO.js CREATE USER****')
     var date = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
-    connection.query("SELECT * FROM USER WHERE username = '" + req.body.username + "';", function (err, result) {
-        if (result.length==0) {
-            connection.query("insert into user ( email_address, username, password, role, first_name, last_name, status, date_registered) values('"
-                + req.body.email + "', '"
-                + req.body.username + "', '"
-                + req.body.password + "', '"
-                + "user" + "', '"
-                + req.body.firstname + "', '"
-                + req.body.lastname + "', '"
-                + "active" + "', '"
-                + date + "')",
-                function (err, result) {
-                    if (err) throw err
-                   
+    var queryString_findDupeUserNames = "SELECT * FROM USER WHERE username = '" + req.body.username + "';"
+    var queryString_findDupeEmails = "SELECT * FROM USER WHERE email_address = '" + req.body.email + "';"
+    connection.query(queryString_findDupeUserNames, function (err, res_usernamesQuery) {
+            if (res_usernamesQuery.length == 0) {
+                connection.query(queryString_findDupeEmails, function(err, res_emailsQuery) {
+                    if (res_emailsQuery.length == 0) {
+                        connection.query("insert into user ( email_address, username, password, role, first_name, last_name, status, date_registered) values('"
+                        + req.body.email + "', '"
+                        + req.body.username + "', '"
+                        + req.body.password + "', '"
+                        + "user" + "', '"
+                        + req.body.firstname + "', '"
+                        + req.body.lastname + "', '"
+                        + "active" + "', '"
+                        + date + "')",
+                        function (err, res_insertQuery) {
+                            if (err) throw err;
+                        })
+                        var strUser = JSON.stringify(req.body);
+                        console.log("strUser: " + strUser);
+                        console.log("strUser.username: " + strUser.username);
+                        var user = JSON.parse(strUser);
+                        console.log("user: " + user);
+                        console.log("user.username: " + user.username);
+                        res.send(user);
+                    } else if (err){
+                        throw err;
+                    } else {
+                        console.log("PREXISTING EMAIL DETECTED");
+                        res.send('Prexisting email address');
+                    }
                 })
-                var strUser = JSON.stringify(req.body);
-                console.log("strUser: " + strUser)
-                console.log("strUser.username: " + strUser.username)
-                var user = JSON.parse(strUser);
-                console.log("user: " + user)
-                console.log("user.username: " + user.username)
-                res.send(user)
-
-        }
-        else if(result.length > 0){
-            console.log("****************************" + err);
-            res.send('not unique')
-        }
-        else if(err){
-
-        }
-        
-
-        // res.render('index', { user: user });
-
+            } else if (err) {
+                throw err;
+            } else {
+                console.log('****PREXISTING USERNAME DETECTED****');
+                res.send('Prexisting username');
+            }   
     })
-
-
-
-
-
 }
-
 
 exports.login = function (req, res) {
     console.log('****IN DAO CREATE USER***')

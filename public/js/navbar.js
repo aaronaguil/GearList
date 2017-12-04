@@ -1,76 +1,107 @@
+console.log("***RUNNING NAVBAR.JS****");
+
 var user = {};
 
 window.onload = function () {
-    // set logout and My Account to hidden
+    console.log("****IN navbar.js ONLOAD****");
 
-
-    var logoutButton = document.getElementById('logout-button');
     var myAccountDropdown = document.getElementById('my-account-dropdown');
-    console.log(logoutButton)
-    logoutButton.setAttribute('style', 'display: none');
     myAccountDropdown.setAttribute('style', 'display: none');
-
-    console.log(logoutButton)
-    var loginButton = document.getElementById('login-button');
-    loginButton.addEventListener("click", loginForm);
-    console.log(logoutButton);
-    var registerButton = document.getElementById('register-button');
+    console.log("account dropdown: " + myAccountDropdown);
+    
+    var loginButton = document.getElementById('loginModal-submitButton');
+    loginButton.addEventListener("click", login);
+    console.log("login button: " + loginButton);
+    
+    var registerButton = document.getElementById('registerModal-submitButton');
+    registerButton.addEventListener("click", register);
     console.log("register button: " + registerButton)
     registerButton.addEventListener("click", registerForm);
-    
+ 
+ 
+    var logoutButton = document.getElementById('logout-button');
     logoutButton.addEventListener("click", logout)
-    
+    logoutButton.setAttribute('style', 'display: none');
+    console.log(logoutButton)
+
     var createPostButton = document.getElementById('createPostButton');
     console.log("create post button: " + createPostButton)
     createPostButton.addEventListener("click", createPostForm);
+
+    var homeButton = document.getElementById('homeButton');
+    console.log(homeButton);
+    homeButton.addEventListener("click", goHome);
+    
 }
 
 var login = function () {
-
-    console.log("in login")
-    var username = document.getElementById('username-input').value;
-    console.log(username)
-    var password = document.getElementById('password-input').value;
-
+    console.log("****IN navbar.js LOGIN****")
+    
+    var username = document.getElementById('loginModal-usernameInput').value;
+    var password = document.getElementById('loginModal-passwordInput').value;
+    console.log(username);
+    console.log(password);
+    
     var user = {
         'username': username,
         'password': password,
     }
-
-    console.log("new test: " + JSON.stringify(user))
+    
+    console.log("new test: " + JSON.stringify(user));
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", "/auth/login/", false); // false for synchronous request
+    xmlHttp.open("POST", "/auth/login", false); // false for synchronous request [DEPRECATED]
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(user));
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
-
-    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid') {
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
+        console.log("USER LOGGED IN SUCCESSFULLY: " + username);
         var logoutButton = document.getElementById('logout-button');
         var myAccountDropdown = document.getElementById('my-account-dropdown');
-        logoutButton.setAttribute('style', '');
-        myAccountDropdown.setAttribute('style', '');
-
         var loginButton = document.getElementById('login-button');
         var registerButton = document.getElementById('register-button');
+        var welcomeMessage = document.getElementById('loginModal-successMessage');
+        logoutButton.setAttribute('style', '');
+        myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
+        welcomeMessage.setAttribute('style', '');
+    } else if(xmlHttp.responseText == 'invalid'){
+        console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
+        var errorMessage = document.getElementById('loginModal-errorMessage');
+        errorMessage.setAttribute('style', '');
     }
-    else if(xmlHttp.responseText == 'invalid'){
-        var userNameDiv = document.getElementById('usernameDiv');
-        
-        var error = document.createElement('div');
-        error.setAttribute('style', 'color: red; text-align: left');
-        error.innerText = "Invalid Username or Password";
+}
 
-        userNameDiv.prepend(error);
-    }
+var setAllNavBarButtonsInactive = function() {
+    console.log("****IN navbar.js SETALLNAVBARBUTTONSINACTIVE****");
+    
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', '');
+    var createPostButton = document.getElementById('createPostButton');
+    createPostButton.setAttribute('class', '');
+    var loginButton = document.getElementById('login-button');
+    loginButton.setAttribute('class', '');
+    var registerButton = document.getElementById('register-button');
+    registerButton.setAttribute('class', '');
+}
 
+var goHome = function() {
+    console.log("****IN navbar.js GOHOME****");
+    
+    setAllNavBarButtonsInactive();
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', 'active');
+    var bodyContainer = document.getElementById('body-container');
+    bodyContainer.innerHTML = '';
 }
 
 
 var createPostForm = function(event) {
+    console.log("****IN navbar.js CREATEPOSTFORM****");
+    
     var createPostButton = document.getElementById('createPostButton');
+    setAllNavBarButtonsInactive();
     createPostButton.setAttribute('class', 'active');
     var homeButton = document.getElementById('homeButton');
     homeButton.setAttribute('class', '');
@@ -100,6 +131,7 @@ var createPostForm = function(event) {
 }
 
 var submitPost = function(event) {
+    console.log("****IN navbar.js SUBMITPOST****");
     
     var titleInput = document.getElementById('titleInputBox').value;
     var descriptionInput = document.getElementById('descriptionInputBox').value;
@@ -119,6 +151,7 @@ var submitPost = function(event) {
     }
 }
 
+<<<<<<< HEAD
 var loginForm = function () {
     console.log('in loginForm')
     var bodyContainer = document.getElementById('body-container');
@@ -304,17 +337,17 @@ var registerForm = function () {
 
 }
 
+=======
+>>>>>>> dffb5c98b69cb1f2bf6f61db7dc269aaa979db40
 var register = function () {
+    console.log("****IN navbar.js REGISTER****");
 
-    console.log("in register")
-
-
-    var username = document.getElementById('username-input').value;
+    var username = document.getElementById('registerModal-usernameInput').value;
     console.log(username)
-    var password = document.getElementById('password-input').value;
-    var email = document.getElementById('email-input').value;
-    var firstname = document.getElementById('firstname-input').value;
-    var lastname = document.getElementById('lastname-input').value;
+    var password = document.getElementById('registerModal-passwordInput').value;
+    var email = document.getElementById('registerModal-emailInput').value;
+    var firstname = document.getElementById('registerModal-firstNameInput').value;
+    var lastname = document.getElementById('registerModal-lastNameInput').value;
 
     var newUser = {
         'username': username,
@@ -329,35 +362,54 @@ var register = function () {
     xmlHttp.open("POST", "/auth/register/", false); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(newUser));
-    if (xmlHttp.status == '200' && xmlHttp.responseText != 'not unique') {
-        console.log('valid')
+    var errorMessageSelector = '[id^="registerModal-errorMessage-"]';
+    var successMessageSelector = '[id^="registerModal-successMessage-"]';
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username') {
+        console.log('In navbar.js - valid registration form, user created.')
+        hideMatchingElements(errorMessageSelector);
+        var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
+        successMessage.setAttribute('style', '');
+    } else if (xmlHttp.responseText == 'Prexisting email address') {
+        console.log('In navbar.js - invalid registration form, prexisting email address, message displayed')
+        hideMatchingElements(errorMessageSelector);
+        hideMatchingElements(successMessageSelector);
+        var prexistingEmailMessage = document.getElementById('registerModal-errorMessage-prexistingEmail');
+        prexistingEmailMessage.setAttribute('style', '');
+    } else if (xmlHttp.responseText == 'Prexisting username') {
+        console.log('In navbar.js - invalid registration form, prexisting username, message displayed')
+        hideMatchingElements(errorMessageSelector);
+        hideMatchingElements(successMessageSelector);
+        var prexistingUsernameMessage = document.getElementById('registerModal-errorMessage-prexistingUsername');
+        prexistingUsernameMessage.setAttribute('style', '');
     }
-    else if (xmlHttp.responseText == 'not unique') {
-        var usernameDiv = document.getElementById('usernameDiv');
-
-        var error = document.createElement('div');
-        error.setAttribute('style', 'color: red; text-align: left;');
-        error.innerText = 'username is already taken'
-
-        usernameDiv.prepend(error);
-    }
-
-
-
-
 }
 
 var logout = function () {
+    console.log("****IN navbar.js LOGOUT****");
+
     user = {};
     console.log("logged out")
     var logoutButton = document.getElementById('logout-button');
     var myAccountDropdown = document.getElementById('my-account-dropdown');
-    logoutButton.setAttribute('style', 'display : none');
-    myAccountDropdown.setAttribute('style', 'display : none');
     var loginButton = document.getElementById('login-button');
     var registerButton = document.getElementById('register-button');
+    var welcomeMessage = document.getElementById('loginModal-successMessage');
+    logoutButton.setAttribute('style', 'display : none');
+    myAccountDropdown.setAttribute('style', 'display : none');
     loginButton.setAttribute('style', '');
     registerButton.setAttribute('style', '');
-
+    welcomeMessage.setAttribute('style', 'display: none');
 }
+
+var hideMatchingElements = function (idRegex) {
+    console.log("****IN navbar.js HIDEMATCHINGELEMENTS****");
+    
+    var listOfElements = document.querySelectorAll(idRegex);
+    for (var element of listOfElements) {
+        element.setAttribute('style', 'display: none');
+    }
+}
+
+
+
 

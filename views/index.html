@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html>
 
 <head>
@@ -61,12 +62,10 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right right-nav-links">
-        <li id="login-button" id="login"><a href="#">Login</a></li>
-        <li id="register-button"><a href="#">Register</a></li>
-
+        <li id="login-button" data-toggle="modal" data-target="#loginModal"><a href="#">Login</a></li>
+        <li id="register-button" data-toggle="modal" data-target="#registerModal"><a href="#">Register</a></li>
         <li id="logout-button" ><a href="#">Logout</a></li>
-         <li id="my-account-dropdown" class=" dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+        <li id="my-account-dropdown" class=" dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li class="dropdown-li" ><a href="#">My Account</a></li>
             <li role="separator" class="divider"></li>
@@ -86,12 +85,74 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<!-- Modal for login -->
+<!-- For examples, see https://v4-alpha.getbootstrap.com/components/modal/#live-demo and see https://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="loginModal-dialog" role="document">
+        <div class="loginModal-content" role="">
+            <div class="loginModal-header">
+                <h4 class="loginModal-title">Login</h4>
+            </div>
+            <div class="loginModal-body">
+                <div class="loginModal-inputs">
+                        <input id="loginModal-usernameInput" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg" id="username-input">
+                        <input id="loginModal-passwordInput" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg" id="password-input">
+                </div>
+                <div class="loginModal-buttons">
+                    <button id="loginModal-submitButton" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="loginModal-closeButton" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+            <div class="loginModal-footer">
+                <h1 id="loginModal-errorMessage" style="display: none">Error: invalid username or password.</h1>
+                <h1 id="loginModal-forgotUsernameOrPasswordMessage"><a href="#">Forgot your username or password?</a></h1>
+                <h1 id="loginModal-successMessage" style="display: none">Welcome!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for register -->
+<div id="registerModal" class="modal fade" role="dialog">
+    <div class="registerModal-dialog" role="document">
+        <div class="registerModal-content" role="">
+            <div class="registerModal-header">
+                <h4 class="registerModal-title">Register</h4>
+            </div>
+            <div class="registerModal-body" id="registerModal-body">
+                <div class="registerModal-inputs">
+                        <input id="registerModal-usernameInput" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg" id="username-input">
+                        <input id="registerModal-emailInput" placeholder="youremail@host.com" type="text" name="email" aria-describedby="basic-addon1" class="form-control input-lg" id="email-input">
+                        <input id="registerModal-passwordInput" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg" id="password-input">
+                        <input id="registerModal-firstNameInput" placeholder="First Name" type="text" name="firstName" aria-describedby="basic-addon1" class="form-control input-lg" id="nameInput">
+                        <input id="registerModal-lastNameInput" placeholder="Last Name" type="text" name="lastName" aria-describedby="basic-addon1" class="form-control input-lg" id="nameInput">
+                </div>
+                <div class="registerModal-buttons">
+                    <button id="registerModal-submitButton" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="registerModal-closeButton" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+            <div class="registerModal-footer">
+                <h1 id="registerModal-errorMessage-prexistingUsername" style="display: none">Error: that username already exists. <a href="#">Forgot your username or password?</a></h1>
+                <h1 id="registerModal-errorMessage-prexistingEmail" style="display: none">Error: that email address is already registered with a username. <a href="#">Forgot your username or password?</a></h1>
+                <h1 id="registerModal-errorMessage-invalidEmail" style="display: none">Error: invalid email address.</h1>
+                <h1 id="registerModal-errorMessage-invalidPassword" style="display: none">Error: invalid password.</h1>
+                <h1 id="registerModal-errorMessage-invalidUsername" style="display: none">Error: invalid username.</h1>
+                <h1 id="registerModal-errorMessage-invalidFirstName" style="display: none">Error: invalid first name.</h1>
+                <h1 id="registerModal-errorMessage-invalidLastName" style="display: none">Error: invalid last name.</h1>
+                <h1 id="registerModal-successMessage-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
+    
 <div id="body-container">
 
 </div>
 
-  <script src="/js/navbar.js"></script>
-
+<script src="/js/navbar.js"></script>
+    
 </body>
 
 </html>

@@ -29,7 +29,6 @@ window.onload = function () {
     var homeButton = document.getElementById('homeButton');
     console.log(homeButton);
     homeButton.addEventListener("click", goHome);
-    
 }
 
 var login = function () {
@@ -68,7 +67,7 @@ var login = function () {
         console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
         var errorMessage = document.getElementById('loginModal-errorMessage');
         errorMessage.setAttribute('style', '');
-    }
+    }       
 }
 
 var setAllNavBarButtonsInactive = function() {

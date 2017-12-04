@@ -1,8 +1,10 @@
 console.log("***RUNNING NAVBAR.JS****");
-
 var user = {};
 
 window.onload = function () {
+    var val = loginFile();
+    console.log(val)
+   
     console.log("****IN navbar.js ONLOAD****");
 
     var myAccountDropdown = document.getElementById('my-account-dropdown');
@@ -34,6 +36,7 @@ window.onload = function () {
 }
 
 var login = function () {
+   
     console.log("****IN navbar.js LOGIN****")
     
     var username = document.getElementById('loginModal-usernameInput').value;

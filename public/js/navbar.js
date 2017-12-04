@@ -17,9 +17,12 @@ window.onload = function () {
     var registerButton = document.getElementById('register-button');
     console.log("register button: " + registerButton)
     registerButton.addEventListener("click", registerForm);
-
+    
     logoutButton.addEventListener("click", logout)
-
+    
+    var createPostButton = document.getElementById('createPostButton');
+    console.log("create post button: " + createPostButton)
+    createPostButton.addEventListener("click", createPostForm);
 }
 
 var login = function () {
@@ -63,6 +66,57 @@ var login = function () {
         userNameDiv.prepend(error);
     }
 
+}
+
+
+var createPostForm = function(event) {
+    var createPostButton = document.getElementById('createPostButton');
+    createPostButton.setAttribute('class', 'active');
+    var homeButton = document.getElementById('homeButton');
+    homeButton.setAttribute('class', '');
+    console.log('in createPostForm');
+    var bodyContainer = document.getElementById('body-container');
+    bodyContainer.innerHTML = '';
+
+    var titleInputBox = document.createElement('input');
+    titleInputBox.setAttribute('placeholder', 'Title')
+    titleInputBox.setAttribute('type', 'text')
+    titleInputBox.setAttribute('id', 'titleInputBox');
+
+    var descriptionInputBox = document.createElement('input');
+    descriptionInputBox.setAttribute('placeholder', 'Description')
+    descriptionInputBox.setAttribute('type', 'text')
+    descriptionInputBox.setAttribute('id', 'descriptionInputBox');
+
+    var submitPostButton = document.createElement('button');
+    submitPostButton.innerText = 'Post!';
+    submitPostButton.addEventListener('click', submitPost);
+    
+    bodyContainer.append(titleInputBox);
+    bodyContainer.append(descriptionInputBox);
+    bodyContainer.append(submitPostButton);
+    
+    //var form = document.createElement('form');
+}
+
+var submitPost = function(event) {
+    
+    var titleInput = document.getElementById('titleInputBox').value;
+    var descriptionInput = document.getElementById('descriptionInputBox').value;
+    console.log(titleInput);
+    console.log(descriptionInput);
+    var postData = {'title': titleInput,
+                    'description': descriptionInput};
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("POST", "/post/submit", false); // false for synchronous request
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(JSON.stringify(postData));
+    console.log(xmlHttp.status)
+    if (xmlHttp.status == 200) {
+        console.log("");
+        var bodyContainer = document.getElementById('body-container');
+        bodyContainer.innerHTML = '';
+    }
 }
 
 var loginForm = function () {

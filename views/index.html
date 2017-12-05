@@ -29,7 +29,6 @@
 <body>
 
 <!-- nav bar -->
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,9 +45,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li id="homeButton" class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-        <li id="createPostButton" style="display: none"><a href="#">Create Post</a></li>
-        <li class="dropdown">
+        <li id="navbar-button-all-home" class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li id="navbar-button-loggedIn-createPost" style="display: none"><a href="#">Create Post</a></li>
+<!--
+        <li class="dropdown" id="navbar-button-loggedIn-unkownDropDown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Action</a></li>
@@ -60,18 +60,19 @@
             <li><a href="#">One more separated link</a></li>
           </ul>
         </li>
+-->
       </ul>
       <ul class="nav navbar-nav navbar-right right-nav-links">
-        <li id="login-button" data-toggle="modal" data-target="#loginModal"><a href="#">Login</a></li>
-        <li id="register-button" data-toggle="modal" data-target="#registerModal"><a href="#">Register</a></li>
-        <li id="logout-button" ><a href="#">Logout</a></li>
-        <li id="my-account-dropdown" class=" dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+        <li id="navbar-button-loggedOut-login" data-toggle="modal" data-target="#loginModal"><a href="#">Login</a></li>
+        <li id="navbar-button-loggedOut-register" data-toggle="modal" data-target="#registerModal"><a href="#">Register</a></li>
+        <li id="navbar-button-loggedIn-logout" ><a href="#">Logout</a></li>
+        <li id="navbar-button-loggedIn-accountDropDown" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li class="dropdown-li" ><a href="#">My Account</a></li>
+            <li class="dropdown-li"><a href="#">Update Account Info</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-li"><a href="#">My Lists</a></li>
+            <li class="dropdown-li"><a href="#">View Lists</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-li"><a href="#">Profile</a></li>
+            <li class="dropdown-li"><a href="#">View Profile</a></li>
           </ul>
         </li>
       <form id="search-form" class="navbar-form navbar-right" >
@@ -95,18 +96,18 @@
             </div>
             <div class="loginModal-body">
                 <div class="loginModal-inputs">
-                        <input id="loginModal-usernameInput" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg" id="username-input">
-                        <input id="loginModal-passwordInput" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg" id="password-input">
+                        <input id="loginModal-input-username" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg">
+                        <input id="loginModal-input-password" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg">
                 </div>
                 <div class="loginModal-buttons">
-                    <button id="loginModal-submitButton" type="submit" class="btn btn-primary">Submit</button>
-                    <button id="loginModal-closeButton" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button id="loginModal-button-submit" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="loginModal-button-close" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
             <div class="loginModal-footer">
-                <h1 id="loginModal-errorMessage" style="display: none">Error: invalid username or password.</h1>
-                <h1 id="loginModal-forgotUsernameOrPasswordMessage"><a href="#">Forgot your username or password?</a></h1>
-                <h1 id="loginModal-successMessage" style="display: none">Welcome!</h1>
+                <h1 id="loginModal-message-error" style="display: none; color: red;">Error: invalid username or password.</h1>
+                <h1 id="loginModal-message-forgotUsernameOrPassword"><a href="#">Forgot your username or password?</a></h1>
+                <h1 id="loginModal-message-success" style="display: none; color: blue;">Welcome!</h1>
             </div>
         </div>
     </div>
@@ -121,26 +122,26 @@
             </div>
             <div class="registerModal-body" id="registerModal-body">
                 <div class="registerModal-inputs">
-                        <input id="registerModal-usernameInput" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg" id="username-input">
-                        <input id="registerModal-emailInput" placeholder="youremail@host.com" type="text" name="email" aria-describedby="basic-addon1" class="form-control input-lg" id="email-input">
-                        <input id="registerModal-passwordInput" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg" id="password-input">
-                        <input id="registerModal-firstNameInput" placeholder="First Name" type="text" name="firstName" aria-describedby="basic-addon1" class="form-control input-lg" id="nameInput">
-                        <input id="registerModal-lastNameInput" placeholder="Last Name" type="text" name="lastName" aria-describedby="basic-addon1" class="form-control input-lg" id="nameInput">
+                        <input id="registerModal-inputUsername" placeholder="Username" type="text" name="username" aria-describedby="basic-addon1" class="form-control input-lg">
+                        <input id="registerModal-input-email" placeholder="youremail@host.com" type="text" name="email" aria-describedby="basic-addon1" class="form-control input-lg">
+                        <input id="registerModal-input-password" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg">
+                        <input id="registerModal-input-firstName" placeholder="First Name" type="text" name="firstName" aria-describedby="basic-addon1" class="form-control input-lg">
+                        <input id="registerModal-input-lastName" placeholder="Last Name" type="text" name="lastName" aria-describedby="basic-addon1" class="form-control input-lg">
                 </div>
                 <div class="registerModal-buttons">
-                    <button id="registerModal-submitButton" type="submit" class="btn btn-primary">Submit</button>
-                    <button id="registerModal-closeButton" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    <button id="registerModal-button-submit" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="registerModal-button-close" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
             <div class="registerModal-footer">
                 <h1 id="registerModal-errorMessage-prexistingUsername" style="display: none">Error: that username already exists. <a href="#">Forgot your username or password?</a></h1>
                 <h1 id="registerModal-errorMessage-prexistingEmail" style="display: none">Error: that email address is already registered with a username. <a href="#">Forgot your username or password?</a></h1>
-                <h1 id="registerModal-errorMessage-invalidEmail" style="display: none">Error: invalid email address.</h1>
-                <h1 id="registerModal-errorMessage-invalidPassword" style="display: none">Error: invalid password.</h1>
-                <h1 id="registerModal-errorMessage-invalidUsername" style="display: none">Error: invalid username.</h1>
-                <h1 id="registerModal-errorMessage-invalidFirstName" style="display: none">Error: invalid first name.</h1>
-                <h1 id="registerModal-errorMessage-invalidLastName" style="display: none">Error: invalid last name.</h1>
-                <h1 id="registerModal-successMessage-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
+                <h1 id="registerModal-message-invalidEmail" style="display: none">Error: invalid email address.</h1>
+                <h1 id="registerModal-message-invalidPassword" style="display: none">Error: invalid password.</h1>
+                <h1 id="registerModal-message-invalidUsername" style="display: none">Error: invalid username.</h1>
+                <h1 id="registerModal-message-invalidFirstName" style="display: none">Error: invalid first name.</h1>
+                <h1 id="registerModal-message-invalidLastName" style="display: none">Error: invalid last name.</h1>
+                <h1 id="registerModal-message-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
 
             </div>
         </div>
@@ -151,15 +152,20 @@
 
 </div>
 
-<script src="/js/navbar/createPostForm.js"></script>
+<!--Source convience scripts-->
+<script src="/js/conviences/hideMatchingElements.js"></script>
+<script src="/js/conviences/displayMatchingElements.js"></script>
+<script src="/js/conviences/setMatchingElementsInactive.js"></script>
+
+<!--Source navbar scripts-->
+<script src="/js/navbar/showDropDownAccountMenu.js"></script>
 <script src="/js/navbar/goHome.js"></script>
-<script src="/js/navbar/hideMatchingElements.js"></script>
 <script src="/js/navbar/login.js"></script>
 <script src="/js/navbar/logout.js"></script>
+<script src="/js/navbar/createPostForm.js"></script>
 <script src="/js/navbar/register.js"></script>
-<script src="/js/navbar/setAllNavBarButtonsInactive.js"></script>
 <script src="/js/navbar/submitPost.js"></script>
-<script src="/js/navbar/navbar.js"></script>
+<script src="/js/navbar/navbar_main.js"></script>
     
 </body>
 

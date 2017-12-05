@@ -99,7 +99,6 @@ var login = function () {
         var myAccountDropdown = document.getElementById('my-account-dropdown');
         var loginButton = document.getElementById('login-button');
         var registerButton = document.getElementById('register-button');
-        var bodyContainer = document.getElementById('body-container')
         var welcomeMessage = document.getElementById('loginModal-successMessage');
         logoutButton.setAttribute('style', '');
         myAccountDropdown.setAttribute('style', '');

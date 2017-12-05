@@ -94,6 +94,8 @@ var login = function () {
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
+      var errorMessage = document.getElementById('loginModal-errorMessage');
+      errorMessage.setAttribute('style', 'display: none')      
         console.log("USER LOGGED IN SUCCESSFULLY: " + username);
         var logoutButton = document.getElementById('logout-button');
         var myAccountDropdown = document.getElementById('my-account-dropdown');
@@ -104,11 +106,12 @@ var login = function () {
         myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
-        welcomeMessage.setAttribute('style', '');
-        bodyContainer.appendChild(welcomeMessage);
+        welcomeMessage.setAttribute('style', 'color: blue');
     } else if(xmlHttp.responseText == 'invalid'){
         console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
+        var welcomeMessage = document.getElementById('loginModal-successMessage');
+        welcomeMessage.setAttribute('style', 'display: none')      
         var errorMessage = document.getElementById('loginModal-errorMessage');
-        errorMessage.setAttribute('style', '');
+        errorMessage.setAttribute('style', 'color: red');
     }       
 }

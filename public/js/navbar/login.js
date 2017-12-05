@@ -99,12 +99,14 @@ var login = function () {
         var myAccountDropdown = document.getElementById('my-account-dropdown');
         var loginButton = document.getElementById('login-button');
         var registerButton = document.getElementById('register-button');
+        var bodyContainer = document.getElementById('body-container')
         var welcomeMessage = document.getElementById('loginModal-successMessage');
         logoutButton.setAttribute('style', '');
         myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
         welcomeMessage.setAttribute('style', '');
+        bodyContainer.appendChild(welcomeMessage);
     } else if(xmlHttp.responseText == 'invalid'){
         console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
         var errorMessage = document.getElementById('loginModal-errorMessage');

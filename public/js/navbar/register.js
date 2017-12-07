@@ -2,7 +2,6 @@ var register = function () {
     console.log("****IN navbar.js REGISTER****");
 
     var username = document.getElementById('registerModal-usernameInput').value;
-    console.log(username)
     var password = document.getElementById('registerModal-passwordInput').value;
     var email = document.getElementById('registerModal-emailInput').value;
     var firstname = document.getElementById('registerModal-firstNameInput').value;
@@ -15,8 +14,8 @@ var register = function () {
         'firstname': firstname,
         'lastname': lastname
     }
-
-    console.log("new test: " + JSON.stringify(newUser))
+    console.log("User to be created: " + JSON.stringify(newUser))
+    
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("POST", "/auth/register/", false); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
@@ -27,18 +26,19 @@ var register = function () {
         console.log('In navbar.js - valid registration form, user created.')
         hideMatchingElements(errorMessageSelector);
         var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
-        successMessage.setAttribute('style', '');
+        successMessage.style.display = 'none';
     } else if (xmlHttp.responseText == 'Prexisting email address') {
         console.log('In navbar.js - invalid registration form, prexisting email address, message displayed')
         hideMatchingElements(errorMessageSelector);
         hideMatchingElements(successMessageSelector);
         var prexistingEmailMessage = document.getElementById('registerModal-errorMessage-prexistingEmail');
-        prexistingEmailMessage.setAttribute('style', '');
+        prexistingEmailMessage.style.display = 'none';
     } else if (xmlHttp.responseText == 'Prexisting username') {
         console.log('In navbar.js - invalid registration form, prexisting username, message displayed')
         hideMatchingElements(errorMessageSelector);
         hideMatchingElements(successMessageSelector);
         var prexistingUsernameMessage = document.getElementById('registerModal-errorMessage-prexistingUsername');
-        prexistingUsernameMessage.setAttribute('style', '');
+        prexistingUsernameMessage.style.display = 'none';
     }
+    
 }

@@ -4,5 +4,6 @@ var hideMatchingElements = function (idRegex) {
     var listOfElements = document.querySelectorAll(idRegex);
     for (var element of listOfElements) {
         element.setAttribute('style', 'display: none');
+        
     }
 }

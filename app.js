@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');                // body-parser is a code
 app.use(bodyParser.urlencoded({extended:true}));        // [@aaron COMMENT REQUEST]
 app.use(bodyParser.json());                             // Tell body-parser that our communication format is JSON
 app.use(express.static(__dirname + '/public'));         // [@aaron COMMENT REQUEST]
+var authController = require('./controllers/authController');
 
 var authRoutes = require('./routes/authRoutes');        // store an object that represents the authroutes file in var authRoutes
 app.use('', authRoutes);                                // tells the express application object app to look in authRoutes for routing
@@ -18,8 +19,19 @@ app.use('', postRoutes);
 // app.use('/user/', userRoutes);
 
 
-app.get('/', function(req, res) {                           // Render index.html when we go to the home page
-    res.sendFile(path.resolve('./views/index.html'));
+// app.get('/', function(req, res) {                           // Render index.html when we go to the home page
+//     res.sendFile(path.resolve('./views/index.html'));
+// });
+
+app.get('/', function(req, res) {        
+    if(authController.getCurrentUser()){
+        
+    }
+    // Render index.html when we go to the home page
+    else{
+        console.log("in auth routes /")
+        res.sendFile(path.resolve('./views/index.html'));
+    }
 });
 
 app.listen(8080);                                           // Wait for users on this port to send requests

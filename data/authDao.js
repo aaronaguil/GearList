@@ -3,7 +3,7 @@ var app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
+var user;
 // main.js
 
 
@@ -19,6 +19,9 @@ connection.connect(function (err) {
     console.log('You are now connected...')
 })
 
+exports.getCurrentUser = function(req, res){
+    return user;
+}
 
 exports.createUser = function (req, res) {
     console.log('****IN authDAO.js CREATE USER****')
@@ -41,7 +44,7 @@ exports.createUser = function (req, res) {
                         function (err, res_insertQuery) {
                             if (err) throw err;
                         })
-                        var strUser = JSON.stringify(req.body);
+                        var strUser = JSON.stringify(result.body);
                         console.log("strUser: " + strUser);
                         console.log("strUser.username: " + strUser.username);
                         var user = JSON.parse(strUser);
@@ -79,16 +82,17 @@ exports.login = function (req, res) {
                 res.send('invalid')
             }
             else if (result.length > 0) {
-                var str = JSON.stringify(result);
+                var str = JSON.stringify(result[0]);
                 console.log("str: " + JSON.stringify(str))
                 var resultJSON = JSON.parse(str);
                 console.log(resultJSON)
+                userId = resultJSON.id;
                 res.send(resultJSON)
             }
             
         })
 
-
+    console.log("user in dao: " + user);
 }
 
 
@@ -96,7 +100,7 @@ exports.login = function (req, res) {
 exports.getUser = function (req, res) {
     console.log('****IN DAO***');
     var userRes = {};
-    connection.query("SELECT * FROM USER WHERE id = 1", function (err, result) {
+    connection.query("SELECT * FROM USER WHERE id = " + userId, function (err, result) {
         if (err) throw err
         var str = JSON.stringify(result);
         console.log("str: " + JSON.stringify(str))

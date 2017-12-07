@@ -16,6 +16,8 @@ router.post('/auth/register', function (req, res) {
     
 })
 
+
+
 router.post('/auth/login', function (req, res) {
     console.log('****IN authRoutes.js /auth/login****')
     authController.login(req, res);

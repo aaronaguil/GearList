@@ -20,7 +20,6 @@
 //     console.log("register button: " + registerButton)
 //     registerButton.addEventListener("click", registerForm);
  
- 
 //     var logoutButton = document.getElementById('logout-button');
 //     logoutButton.addEventListener("click", logout)
 //     logoutButton.setAttribute('style', 'display: none');

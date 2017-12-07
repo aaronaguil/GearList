@@ -24,14 +24,9 @@ app.use('', postRoutes);
 // });
 
 app.get('/', function(req, res) {        
-    if(authController.getCurrentUser()){
-        
-    }
-    // Render index.html when we go to the home page
-    else{
         console.log("in auth routes /")
         res.sendFile(path.resolve('./views/index.html'));
-    }
+    
 });
 
 app.listen(8080);                                           // Wait for users on this port to send requests

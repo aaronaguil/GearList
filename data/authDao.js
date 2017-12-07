@@ -3,7 +3,7 @@ var app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-var user;
+var userId = null;
 // main.js
 
 
@@ -20,7 +20,15 @@ connection.connect(function (err) {
 })
 
 exports.getCurrentUser = function(req, res){
-    return user;
+    console.log("userId in authDao: " + userId)
+    if(userId){
+        console.log("in if authDao")
+        this.getUser(req, res, userId);
+    }
+    else{
+        console.log("in else authDao")
+        res.send();
+    }
 }
 
 exports.createUser = function (req, res) {
@@ -92,15 +100,17 @@ exports.login = function (req, res) {
             
         })
 
-    console.log("user in dao: " + user);
 }
 
+exports.logout = function(req, res){
+    userId = null;
+    res.send();
+}
 
-
-exports.getUser = function (req, res) {
+exports.getUser = function (req, res, id) {
     console.log('****IN DAO***');
     var userRes = {};
-    connection.query("SELECT * FROM USER WHERE id = " + userId, function (err, result) {
+    connection.query("SELECT * FROM USER WHERE id = " + id, function (err, result) {
         if (err) throw err
         var str = JSON.stringify(result);
         console.log("str: " + JSON.stringify(str))

@@ -1,12 +1,14 @@
 var createPostForm = function(event) {
     console.log("****IN navbar.js CREATEPOSTFORM****");
     
-    var createPostButton = document.getElementById('createPostButton');
-    setAllNavBarButtonsInactive();
+    var createPostButton = document.getElementById('navbar-button-loggedIn-createPost');     
+    var selector_AllNavbarButtons = "[id^=navbar-button]";
+    setMatchingElementsInactive(selector_AllNavbarButtons);
     createPostButton.setAttribute('class', 'active');
-    var homeButton = document.getElementById('homeButton');
-    homeButton.setAttribute('class', '');
-    console.log('in createPostForm');
+
+//    var homeButton = document.getElementById('homeButton');
+//    homeButton.setAttribute('class', '');
+    
     var bodyContainer = document.getElementById('body-container');
     bodyContainer.innerHTML = '';
 

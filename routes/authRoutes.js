@@ -16,15 +16,28 @@ router.post('/auth/register', function (req, res) {
     
 })
 
+
+
 router.post('/auth/login', function (req, res) {
     console.log('****IN authRoutes.js /auth/login****')
     authController.login(req, res);
     
 })
 
+router.get('/auth/logout', function (req, res) {
+    console.log('****IN authRoutes.js /auth/logout****')
+    authController.logout(req, res);
+    
+})
+
 router.get('/auth/', function (req, res) {
     console.log('testing index')
    authController.home();
+})
+
+router.get('/auth/user', function (req, res) {
+    console.log('testing index')
+   authController.getCurrentUser(req, res);
 })
 
 router.get('/auth/user/:id', function (req, res) {

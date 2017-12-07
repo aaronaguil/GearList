@@ -23,24 +23,25 @@ var login = function () {
     xmlHttp.send(JSON.stringify(user));
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
-
-    var selector_loggedInNavbarButtons = '[id^=navbar-button-loggedIn]';
-    var selector_loggedOutNavbarButtons = '[id^=navbar-button-loggedOut]';
-    var selector_allLoginModalMessages = '[id^=loginModal-message]';   
-    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid') {
-      console.log("USER LOGGED IN SUCCESSFULLY: " + username);
-      hideMatchingElements(selector_allLoginModalMessages);
-      hideMatchingElements(selector_loggedOutNavbarButtons);
-      displayMatchingElements(selector_loggedInNavbarButtons);
-      var welcomeMessage = document.getElementById('loginModal-message-success');
-      welcomeMessage.style.display = 'inline';
-    } else if (xmlHttp.responseText == 'invalid') {
-      console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
-      hideMatchingElements(selector_allLoginModalMessages);
-      var forgotMessage = document.getElementById('loginModal-message-forgotUsernameOrPassword');
-      var errorMessage = document.getElementById('loginModal-message-error');
-      forgotMessage.style.display = 'inline';
-      errorMessage.style.display = 'inline';
+    if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
+      hideMatchingElements('message')
+        console.log("USER LOGGED IN SUCCESSFULLY: " + username);
+        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
+        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
+        var loginButton = document.getElementById('navbar-button-loggedOut-login');
+        var registerButton = document.getElementById('navbar-button-loggedOut-register');
+        var welcomeMessage = document.getElementById('loginModal-message-success');
+        logoutButton.setAttribute('style', '');
+        logoutButton.addEventListener('click', logout);
+        myAccountDropdown.setAttribute('style', '');
+        loginButton.setAttribute('style', 'display: none');
+        registerButton.setAttribute('style', 'display: none');
+        welcomeMessage.setAttribute('style', 'color: blue');
+    } else if(xmlHttp.responseText == 'invalid'){
+        console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
+        hideMatchingElements('message')
+        var errorMessage = document.getElementById('loginModal-errorMessage');
+        errorMessage.setAttribute('style', 'color: red');
     }       
 }
 

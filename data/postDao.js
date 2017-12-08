@@ -55,9 +55,11 @@ exports.getPostsLikes = function (req, res, pid) {
     connection.query("SELECT COUNT(id) AS COUNT FROM USER_LIKE_POST WHERE post_id = " + pid + ";",
         function (err, likes) {
             var strLikesCount = JSON.stringify(likes[0]);
+            var likesCountJSON = JSON.parse(strLikesCount);
+            var totalPostLikes = likesCountJSON.COUNT
             console.log("test")
             console.log(strLikesCount);
-            res.send(strLikesCount);
+            res.send(JSON.stringify(totalPostLikes));
         });
 }
 

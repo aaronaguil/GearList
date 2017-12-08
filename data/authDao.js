@@ -84,18 +84,20 @@ exports.login = function (req, res) {
             if (result.length == 0) {
                 console.log("****************************" + result.length);
                 var str = JSON.stringify(result);
-                console.log("str: " + JSON.stringify(str))
+                // console.log("str: " + JSON.stringify(str))
                 var resultJSON = JSON.parse(str);
-                console.log(resultJSON)
+                // console.log(resultJSON)
                 res.send('invalid')
             }
             else if (result.length > 0) {
                 var str = JSON.stringify(result[0]);
-                console.log("str: " + JSON.stringify(str))
+                // console.log("str: " + JSON.stringify(str))
                 var resultJSON = JSON.parse(str);
-                console.log(resultJSON)
+                // console.log(resultJSON)
                 userId = resultJSON.id;
-                res.send(resultJSON)
+                
+                res.send(JSON.stringify(resultJSON.id));
+                
             }
             
         })

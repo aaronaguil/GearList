@@ -15,9 +15,12 @@ window.onload = function () {
         var registerButton = document.getElementById('navbar-button-loggedOut-register');
         var welcomeMessage = document.getElementById('loginModal-message-success');
         logoutButton.setAttribute('style', '');
+        logoutButton.addEventListener('click', logout);
         myAccountDropdown.setAttribute('style', '');
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
+
+        getPosts(JSON.parse(user).id);
     }
     else{
         var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
@@ -37,6 +40,8 @@ window.onload = function () {
         logoutButton.addEventListener("click", logout);
         logoutButton.style.display = 'none';
         console.log(logoutButton);
+
+        getAllPosts(1);
     }
 
 

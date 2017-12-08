@@ -37,10 +37,13 @@ var login = function () {
         loginButton.setAttribute('style', 'display: none');
         registerButton.setAttribute('style', 'display: none');
         welcomeMessage.setAttribute('style', 'color: blue');
+
+        getPosts(xmlHttp.responseText);
+       
     } else if(xmlHttp.responseText == 'invalid'){
         console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
         hideMatchingElements('message')
-        var errorMessage = document.getElementById('loginModal-errorMessage');
+        var errorMessage = document.getElementById('loginModal-message-error');
         errorMessage.setAttribute('style', 'color: red');
     }       
 }

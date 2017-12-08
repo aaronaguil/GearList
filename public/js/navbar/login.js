@@ -35,8 +35,6 @@ var login = function () {
       hideMatchingElements(selector_loginModalMessages);
       welcomeMessage.style.display = "block";
       getPosts(xmlHttp.responseText);
-      
-      
   } else if(xmlHttp.responseText == "invalid"){
       console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
       var errorMessage = document.getElementById('loginModal-message-error');

@@ -5,53 +5,26 @@ window.onload = function () {
     console.log("****IN navbar.js ONLOAD****");
     
     var user = auth();
-
-    if(user){
-       
-        console.log("USER LOGGED IN : " + user);
-        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
-        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        var loginButton = document.getElementById('navbar-button-loggedOut-login');
-        var registerButton = document.getElementById('navbar-button-loggedOut-register');
-        var welcomeMessage = document.getElementById('loginModal-message-success');
-        logoutButton.setAttribute('style', '');
-        myAccountDropdown.setAttribute('style', '');
-        loginButton.setAttribute('style', 'display: none');
-        registerButton.setAttribute('style', 'display: none');
+    
+    var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";
+    var selector_loggedOutNavbarButtons = "[id^=navbar-button-loggedOut]";
+    if(user){        
+        displayMatchingElements(selector_loggedInNavbarButtons);
+        hideMatchingElements(selector_loggedOutNavbarButtons);
     }
     else{
-        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        myAccountDropdown.addEventListener("click", showDropDownAccountMenu);
-        myAccountDropdown.style.display = 'none';
-        console.log("account dropdown: " + myAccountDropdown);
-        
-        var loginButton = document.getElementById('loginModal-button-submit');
-        loginButton.addEventListener("click", login);
-        console.log("login button: " + loginButton);
-        
-        var registerButton = document.getElementById('registerModal-button-submit');
-        registerButton.addEventListener("click", register);
-        console.log("register button: " + registerButton)
-     
-        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
-        logoutButton.addEventListener("click", logout);
-        logoutButton.style.display = 'none';
-        console.log(logoutButton);
+        displayMatchingElements(selector_loggedOutNavbarButtons);
+        hideMatchingElements(selector_loggedInNavbarButtons);
     }
 
+    var selector_allNavbarButtons = "[id^=navbar-button]";
+    var selector_allLoginModalButtons = "[id^=loginModal-button]";
+    var selector_allRegisterModalButtons = "[id^=registerModal-button]";
+    addEventListenersByName(selector_allNavbarButtons);
+    addEventListenersByName(selector_allLoginModalButtons);
+    addEventListenersByName(selector_allRegisterModalButtons);
 
-
-    var createPostButton = document.getElementById('navbar-button-loggedIn-createPost');
-    createPostButton.addEventListener("click", createPostForm);
-    console.log("create post button: " + createPostButton)
-
-    var homeButton = document.getElementById('navbar-button-all-home');
-    console.log(homeButton);
-    homeButton.addEventListener("click", goHome);
-
-    
 }
-
 
 var auth = function(){
     console.log('in auth function navbar.js')

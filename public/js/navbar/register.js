@@ -1,12 +1,7 @@
 var register = function () {
     console.log("****IN navbar/register.js****");
 
-<<<<<<< HEAD
     var username = document.getElementById('registerModal-input-username').value;
-=======
-    var username = document.getElementById('registerModal-inputUsername').value;
-    console.log(username.value)
->>>>>>> 2047a4153d8445059aec85fc74746b7f57c391b9
     var password = document.getElementById('registerModal-input-password').value;
     var email = document.getElementById('registerModal-input-email').value;
     var firstname = document.getElementById('registerModal-input-firstName').value;

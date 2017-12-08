@@ -1,3 +1,0 @@
-var showDropDownAccountMenu = function () {
-    
-}

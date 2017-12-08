@@ -5,42 +5,17 @@ window.onload = function () {
     console.log("****IN navbar.js ONLOAD****");
     
     var user = auth();
-
-    if(user){
-       
-        console.log("USER LOGGED IN : " + user);
-        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
-        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        var loginButton = document.getElementById('navbar-button-loggedOut-loggedin');
-        var registerButton = document.getElementById('navbar-button-loggedOut-register');
-        var welcomeMessage = document.getElementById('loginModal-message-success');
-        logoutButton.setAttribute('style', '');
-        logoutButton.addEventListener('click', logout);
-        myAccountDropdown.setAttribute('style', '');
-        loginButton.setAttribute('style', 'display: none');
-        registerButton.setAttribute('style', 'display: none');
-
+    
+    var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";
+    var selector_loggedOutNavbarButtons = "[id^=navbar-button-loggedOut]";
+    if(user){        
+        displayMatchingElements(selector_loggedInNavbarButtons);
+        hideMatchingElements(selector_loggedOutNavbarButtons);
         getPosts(JSON.parse(user).id);
     }
     else{
-        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        myAccountDropdown.addEventListener("click", showDropDownAccountMenu);
-        myAccountDropdown.style.display = 'none';
-        console.log("account dropdown: " + myAccountDropdown);
-        
-        var loginButton = document.getElementById('loginModal-button-login');
-        // loginButton.addEventListener("click", login);
-        console.log( loginButton);
-        
-        var registerButton = document.getElementById('registerModal-button-register');
-        registerButton.addEventListener("click", register);
-        console.log("register button: " + registerButton)
-     
-        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
-        logoutButton.addEventListener("click", logout);
-        logoutButton.style.display = 'none';
-        console.log(logoutButton);
-
+        displayMatchingElements(selector_loggedOutNavbarButtons);
+        hideMatchingElements(selector_loggedInNavbarButtons);
         getAllPosts(1);
     }
 

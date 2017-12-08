@@ -44,19 +44,14 @@ window.onload = function () {
         getAllPosts(1);
     }
 
+    var selector_allNavbarButtons = "[id^=navbar-button]";
+    var selector_allLoginModalButtons = "[id^=loginModal-button]";
+    var selector_allRegisterModalButtons = "[id^=registerModal-button]";
+    addEventListenersByName(selector_allNavbarButtons);
+    addEventListenersByName(selector_allLoginModalButtons);
+    addEventListenersByName(selector_allRegisterModalButtons);
 
-
-    var createPostButton = document.getElementById('navbar-button-loggedIn-createPost');
-    createPostButton.addEventListener("click", createPostForm);
-    console.log("create post button: " + createPostButton)
-
-    var homeButton = document.getElementById('navbar-button-all-home');
-    console.log(homeButton);
-    homeButton.addEventListener("click", goHome);
-
-    
 }
-
 
 var auth = function(){
     console.log('in auth function navbar.js')

@@ -23,8 +23,8 @@ var login = function () {
     xmlHttp.send(JSON.stringify(user));
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
+    
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
-      hideMatchingElements('message')
         console.log("USER LOGGED IN SUCCESSFULLY: " + username);
         var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
         var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');

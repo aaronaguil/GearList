@@ -100,14 +100,14 @@
                         <input id="loginModal-input-password" placeholder="Password" type="password" name="password" aria-describedby="basic-addon1" class="form-control input-lg">
                 </div>
                 <div class="loginModal-buttons">
-                    <button id="loginModal-button-submit" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="loginModal-button-login" type="submit" class="btn btn-primary">Submit</button>
                     <button id="loginModal-button-close" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
             <div class="loginModal-footer">
                 <h1 id="loginModal-message-error" style="display: none; color: red;">Error: invalid username or password.</h1>
-                <h1 id="loginModal-message-forgotUsernameOrPassword"><a href="#">Forgot your username or password?</a></h1>
                 <h1 id="loginModal-message-success" style="display: none; color: blue;">Welcome!</h1>
+                <h1 id="loginModal-message-forgotUsernameOrPassword"><a href="#">Forgot your username or password?</a></h1>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
                         <input id="registerModal-input-lastName" placeholder="Last Name" type="text" name="lastName" aria-describedby="basic-addon1" class="form-control input-lg">
                 </div>
                 <div class="registerModal-buttons">
-                    <button id="registerModal-button-submit" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="registerModal-button-register" type="submit" class="btn btn-primary">Submit</button>
                     <button id="registerModal-button-close" type="close" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -142,7 +142,6 @@
                 <h1 id="registerModal-message-invalidFirstName" style="display: none">Error: invalid first name.</h1>
                 <h1 id="registerModal-message-invalidLastName" style="display: none">Error: invalid last name.</h1>
                 <h1 id="registerModal-message-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
-
             </div>
         </div>
     </div>
@@ -153,10 +152,11 @@
 </div>
 
 <!--Source convience scripts-->
+<script src="/js/conviences/addEventListenersByName.js"></script>
 <script src="/js/conviences/hideMatchingElements.js"></script>
 <script src="/js/conviences/displayMatchingElements.js"></script>
 <script src="/js/conviences/setMatchingElementsInactive.js"></script>
-
+    
 <!--Source navbar scripts-->
 <script src="/js/navbar/showDropDownAccountMenu.js"></script>
 <script src="/js/navbar/goHome.js"></script>

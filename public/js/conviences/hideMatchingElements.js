@@ -1,7 +1,7 @@
-var hideMatchingElements = function (idRegex) {
-    console.log("****IN navbar.js HIDEMATCHINGELEMENTS****");
+var hideMatchingElements = function (selector) {
+    console.log("****IN conveinces/hideMatchingElements.js****");
     
-    var listOfElements = document.querySelectorAll(idRegex);
+    var listOfElements = document.querySelectorAll(selector);
     for (var element of listOfElements) {
         element.style.display = 'none';
     }

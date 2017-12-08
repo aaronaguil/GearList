@@ -20,24 +20,24 @@ var register = function () {
     xmlHttp.open("POST", "/auth/register/", false); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(JSON.stringify(newUser));
-    var errorMessageSelector = '[id^="registerModal-errorMessage-"]';
-    var successMessageSelector = '[id^="registerModal-successMessage-"]';
+    var selector_allRegiserModalErrorMessages = '[id^="registerModal-message-error"]';
+    var selector_allRegisterModalSuccessMessages = '[id^="registerModal-message-success"]';
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username') {
         console.log('In register.js - valid registration form, user created.')
-        hideMatchingElements(errorMessageSelector);
-        var successMessage = document.getElementById('registerModal-message-newUserCreated');
-        successMessage.style.display = 'none';
+        hideMatchingElements(selector_allRegiserModalErrorMessages);
+        var successMessage = document.getElementById('registerModal-message-success-newUserCreated');
+        successMessage.style.display = 'block';
     } else if (xmlHttp.responseText == 'Prexisting email address') {
         console.log('In register.js - invalid registration form, prexisting email address, message displayed')
-        hideMatchingElements(errorMessageSelector);
-        hideMatchingElements(successMessageSelector);
-        var prexistingEmailMessage = document.getElementById('registerModal-errorMessage-prexistingEmail');
-        prexistingEmailMessage.style.display = 'none';
+        hideMatchingElements(selector_allRegiserModalErrorMessages);
+        hideMatchingElements(selector_allRegisterModalSuccessMessages);
+        var prexistingEmailMessage = document.getElementById('registerModal-message-error-prexistingEmail');
+        prexistingEmailMessage.style.display = 'block';
     } else if (xmlHttp.responseText == 'Prexisting username') {
         console.log('In register.js - invalid registration form, prexisting username, message displayed')
-        hideMatchingElements(errorMessageSelector);
-        hideMatchingElements(successMessageSelector);
-        var prexistingUsernameMessage = document.getElementById('registerModal-errorMessage-prexistingUsername');
-        prexistingUsernameMessage.style.display = 'none';
+        hideMatchingElements(selector_allRegiserModalErrorMessages);
+        hideMatchingElements(selector_allRegisterModalSuccessMessages);
+        var prexistingUsernameMessage = document.getElementById('registerModal-message-error-prexistingUsername');
+        prexistingUsernameMessage.style.display = 'block';
     }   
 }

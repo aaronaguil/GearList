@@ -1,11 +1,11 @@
 var register = function () {
-    console.log("****IN navbar.js REGISTER****");
+    console.log("****IN navbar/register.js****");
 
-    var username = document.getElementById('registerModal-usernameInput').value;
-    var password = document.getElementById('registerModal-passwordInput').value;
-    var email = document.getElementById('registerModal-emailInput').value;
-    var firstname = document.getElementById('registerModal-firstNameInput').value;
-    var lastname = document.getElementById('registerModal-lastNameInput').value;
+    var username = document.getElementById('registerModal-input-username').value;
+    var password = document.getElementById('registerModal-input-password').value;
+    var email = document.getElementById('registerModal-input-email').value;
+    var firstname = document.getElementById('registerModal-input-firstName').value;
+    var lastname = document.getElementById('registerModal-input-lastName').value;
 
     var newUser = {
         'username': username,
@@ -23,22 +23,21 @@ var register = function () {
     var errorMessageSelector = '[id^="registerModal-errorMessage-"]';
     var successMessageSelector = '[id^="registerModal-successMessage-"]';
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username') {
-        console.log('In navbar.js - valid registration form, user created.')
+        console.log('In register.js - valid registration form, user created.')
         hideMatchingElements(errorMessageSelector);
         var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
         successMessage.style.display = 'none';
     } else if (xmlHttp.responseText == 'Prexisting email address') {
-        console.log('In navbar.js - invalid registration form, prexisting email address, message displayed')
+        console.log('In register.js - invalid registration form, prexisting email address, message displayed')
         hideMatchingElements(errorMessageSelector);
         hideMatchingElements(successMessageSelector);
         var prexistingEmailMessage = document.getElementById('registerModal-errorMessage-prexistingEmail');
         prexistingEmailMessage.style.display = 'none';
     } else if (xmlHttp.responseText == 'Prexisting username') {
-        console.log('In navbar.js - invalid registration form, prexisting username, message displayed')
+        console.log('In register.js - invalid registration form, prexisting username, message displayed')
         hideMatchingElements(errorMessageSelector);
         hideMatchingElements(successMessageSelector);
         var prexistingUsernameMessage = document.getElementById('registerModal-errorMessage-prexistingUsername');
         prexistingUsernameMessage.style.display = 'none';
-    }
-    
+    }   
 }

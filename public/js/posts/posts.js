@@ -97,10 +97,20 @@ var displayPosts = function (data) {
             likesContainer.style.borderTop = "1px solid #969E99";
             if (numLikes == 0) {
                 var likesDiv = document.createElement('div');
+                likesDiv.style.cssFloat = 'left';
+                likesDiv.style.marginRight = '10px';                                
+                var likeWordDiv = document.createElement('div');
+                likeWordDiv.style.marginTop = '-1px';
                 var likesIcon = document.createElement('span');
                 likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
-                likesDiv.append(likesIcon)
+
+                var likeWord = document.createElement('span');
+                likeWord.innerText = 'Like';
+
+                likeWordDiv.append(likeWord);
+                likesDiv.append(likesIcon);
                 likesContainer.append(likesDiv);
+                likesContainer.append(likeWordDiv);
             }
             else {
                 var likesDiv = document.createElement('div');                

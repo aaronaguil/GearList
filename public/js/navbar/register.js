@@ -1,7 +1,12 @@
 var register = function () {
     console.log("****IN navbar/register.js****");
 
+<<<<<<< HEAD
     var username = document.getElementById('registerModal-input-username').value;
+=======
+    var username = document.getElementById('registerModal-inputUsername').value;
+    console.log(username.value)
+>>>>>>> 2047a4153d8445059aec85fc74746b7f57c391b9
     var password = document.getElementById('registerModal-input-password').value;
     var email = document.getElementById('registerModal-input-email').value;
     var firstname = document.getElementById('registerModal-input-firstName').value;
@@ -25,7 +30,7 @@ var register = function () {
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'Prexisting email address' && xmlHttp.responseText != 'Prexisting username') {
         console.log('In register.js - valid registration form, user created.')
         hideMatchingElements(errorMessageSelector);
-        var successMessage = document.getElementById('registerModal-successMessage-newUserCreated');
+        var successMessage = document.getElementById('registerModal-message-newUserCreated');
         successMessage.style.display = 'none';
     } else if (xmlHttp.responseText == 'Prexisting email address') {
         console.log('In register.js - invalid registration form, prexisting email address, message displayed')

@@ -52,7 +52,7 @@ exports.createUser = function (req, res) {
                         function (err, res_insertQuery) {
                             if (err) throw err;
                         })
-                        var strUser = JSON.stringify(result.body);
+                        var strUser = JSON.stringify(req.body);
                         console.log("strUser: " + strUser);
                         console.log("strUser.username: " + strUser.username);
                         var user = JSON.parse(strUser);

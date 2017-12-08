@@ -21,3 +21,7 @@ exports.getTotalPosts = function(req, res){
     console.log('in post controller getTotalPosts')
     dao.getTotalPosts(req, res);
 }
+
+exports.getPostsLikes = function(req, res, pid){
+    dao.getPostsLikes(req, res, pid);
+}

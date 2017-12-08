@@ -63,8 +63,8 @@
 -->
       </ul>
       <ul class="nav navbar-nav navbar-right right-nav-links">
-        <li id="navbar-button-loggedOut-loggedin" data-toggle="modal" data-target="#loginModal"><a href="#">Login</a></li>
-        <li id="navbar-button-loggedOut-register" data-toggle="modal" data-target="#registerModal"><a href="#">Register</a></li>
+        <li id="navbar-button-loggedOut-loginModalButton" data-toggle="modal" data-target="#loginModal"><a href="#">Login</a></li>
+        <li id="navbar-button-loggedOut-registerModalButton" data-toggle="modal" data-target="#registerModal"><a href="#">Register</a></li>
         <li id="navbar-button-loggedIn-logout" ><a href="#">Logout</a></li>
         <li id="navbar-button-loggedIn-accountDropDown" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -134,14 +134,14 @@
                 </div>
             </div>
             <div class="registerModal-footer">
-                <h1 id="registerModal-errorMessage-prexistingUsername" style="display: none">Error: that username already exists. <a href="#">Forgot your username or password?</a></h1>
-                <h1 id="registerModal-errorMessage-prexistingEmail" style="display: none">Error: that email address is already registered with a username. <a href="#">Forgot your username or password?</a></h1>
-                <h1 id="registerModal-message-invalidEmail" style="display: none">Error: invalid email address.</h1>
-                <h1 id="registerModal-message-invalidPassword" style="display: none">Error: invalid password.</h1>
-                <h1 id="registerModal-message-invalidUsername" style="display: none">Error: invalid username.</h1>
-                <h1 id="registerModal-message-invalidFirstName" style="display: none">Error: invalid first name.</h1>
-                <h1 id="registerModal-message-invalidLastName" style="display: none">Error: invalid last name.</h1>
-                <h1 id="registerModal-message-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
+                <h1 id="registerModal-message-error-prexistingUsername" style="display: none">Error: that username already exists. <a href="#">Forgot your username or password?</a></h1>
+                <h1 id="registerModal-message-error-prexistingEmail" style="display: none">Error: that email address is already registered with a username. <a href="#">Forgot your username or password?</a></h1>
+                <h1 id="registerModal-message-error-invalidEmail" style="display: none">Error: invalid email address.</h1>
+                <h1 id="registerModal-message-error-invalidPassword" style="display: none">Error: invalid password.</h1>
+                <h1 id="registerModal-message-error-invalidUsername" style="display: none">Error: invalid username.</h1>
+                <h1 id="registerModal-message-error-invalidFirstName" style="display: none">Error: invalid first name.</h1>
+                <h1 id="registerModal-message-error-invalidLastName" style="display: none">Error: invalid last name.</h1>
+                <h1 id="registerModal-message-success-newUserCreated" style="display: none">Congratulatons! Check your email to confirm your new account.</h1>
             </div>
         </div>
     </div>

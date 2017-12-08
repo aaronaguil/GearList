@@ -1,8 +1,6 @@
 var logout = function () {
     console.log("****IN navbar.js LOGOUT****");
 
-
-
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "/auth/logout", false); // false for synchronous request [DEPRECATED]
     xmlHttp.send();
@@ -16,8 +14,4 @@ var logout = function () {
         hideMatchingElements(selector_loggedInNavbarButtons);
         displayMatchingElements(selector_loggedOutNavbarButtons);
     }    
-
-
-
-    
 }

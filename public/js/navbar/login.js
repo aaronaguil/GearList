@@ -23,25 +23,21 @@ var login = function () {
     xmlHttp.send(JSON.stringify(user));
     console.log(xmlHttp.status)
     console.log(xmlHttp.responseText)
+    
     if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
-      hideMatchingElements('message')
         console.log("USER LOGGED IN SUCCESSFULLY: " + username);
-        var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
-        var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        var loginButton = document.getElementById('navbar-button-loggedOut-login');
-        var registerButton = document.getElementById('navbar-button-loggedOut-register');
-        var welcomeMessage = document.getElementById('loginModal-message-success');
-        logoutButton.setAttribute('style', '');
-        logoutButton.addEventListener('click', logout);
-        myAccountDropdown.setAttribute('style', '');
-        loginButton.setAttribute('style', 'display: none');
-        registerButton.setAttribute('style', 'display: none');
-        welcomeMessage.setAttribute('style', 'color: blue');
-    } else if(xmlHttp.responseText == 'invalid'){
+        var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";
+        var selector_loggedOutNavbarButtons = "[id^=navbar-button-loggedOut]";
+        var selector_loginModalMessages = "[id^=loginModal-message]";
+        var welcomeMessage = document.getElementById("loginModal-message-success");
+        displayMatchingElements(selector_loggedInNavbarButtons);
+        hideMatchingElements(selector_loggedOutNavbarButtons);
+        hideMatchingElements(selector_loginModalMessages);
+        welcomeMessage.style.display = "block";
+    } else if(xmlHttp.responseText == "invalid"){
         console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
-        hideMatchingElements('message')
-        var errorMessage = document.getElementById('loginModal-errorMessage');
-        errorMessage.setAttribute('style', 'color: red');
+        var errorMessage = document.getElementById('loginModal-message-error');
+        errorMessage.style.display = "block";
     }       
 }
 

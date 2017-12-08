@@ -28,7 +28,7 @@ var login = function () {
         console.log("USER LOGGED IN SUCCESSFULLY: " + username);
         var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
         var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        var loginButton = document.getElementById('navbar-button-loggedOut-login');
+        var loginButton = document.getElementById('navbar-button-loggedOut-loggedin');
         var registerButton = document.getElementById('navbar-button-loggedOut-register');
         var welcomeMessage = document.getElementById('loginModal-message-success');
         logoutButton.setAttribute('style', '');

@@ -23,4 +23,9 @@ router.get('/posts/:pageNum', function (req, res) {
     postController.getAllPosts(req, res, pageNum);
  })
 
+router.get('/posts/likes/:pid', function (req, res) {
+    var pid = req.params.pid;
+    postController.getPostsLikes(req, res, pid);
+ })
+
  module.exports = router; 

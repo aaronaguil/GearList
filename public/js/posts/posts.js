@@ -11,7 +11,6 @@ var getPosts = function (id) {
 var displayPosts = function (data) {
 
 
-
     var previousPostId = 0;
     var rowNumber = 1;
     var postIndex = 1;
@@ -31,26 +30,34 @@ var displayPosts = function (data) {
 
     var row = document.createElement('div');
     row.setAttribute('class', 'row');
-    row.style.marginTop = "10px";
+    row.style.marginTop = "50px";
     row.setAttribute('id', 'row-' + rowNumber);
 
     rowOfThree.append(row);
     rowContainer.append(rowOfThree);
     bodyContainer.append(rowContainer);
     var testNum = 0;
-    var multipleImageContainer = document.createElement('div');
+    multipleImageContainer = document.createElement('div');
+    multipleImageContainer.style.textAlign = 'center';
+    multipleImageContainer.style.marginBottom = '20px';
+    multipleImageContainer.style.marginTop = '10px';
 
     for (var index = 0; index < dataJSON.length; index++) {
         console.log('**************** ' + dataJSON[index].id)
         if (previousPostId != dataJSON[index].id) {
+
+            //gets the number of likes of post based on post id
+            var numLikesString = getPostLikes(dataJSON[index].id);
+            var numLikes = JSON.parse(numLikesString);
+
             if (previousPostId != 0) {
                 var columnContainer = document.getElementById('container-' + previousPostId);
-                var titleContainer = document.getElementById('title-container-' + previousPostId);
-                // console.log(columnContainer)
-                // console.log(titleContainer)
-                // console.log(multipleImageContainer)
+                var titleContainer = document.getElementById('likes-container-' + previousPostId);
                 columnContainer.insertBefore(multipleImageContainer, titleContainer);
                 multipleImageContainer = document.createElement('div');
+                multipleImageContainer.style.textAlign = 'center';
+                multipleImageContainer.style.marginBottom = '20px';
+                multipleImageContainer.style.marginTop = '10px';
             }
 
             previousPostId = dataJSON[index].id;
@@ -59,20 +66,16 @@ var displayPosts = function (data) {
 
 
             var column = document.createElement('div');
-            if (imageIndex == 1) {
-                column.setAttribute('class', 'col-sm-3 col-sm-push-1');
-                imageIndex++;
-            }
-            else if (imageIndex == 2) {
-                column.setAttribute('class', 'col-sm-3 col-sm-push-2');
-                imageIndex++;
-            }
-            else if (imageIndex == 3) {
-                column.setAttribute('class', 'col-sm-3 col-sm-push-3');
-                imageIndex = 1;
-            }
-            column.setAttribute('id', 'container-' + dataJSON[index].id)
-            column.style.border = "1px solid black"
+            column.setAttribute('class', 'col-sm-4');
+            column.style.padding = '20px';
+
+            var card = document.createElement('div');
+            card.setAttribute('id', 'container-' + dataJSON[index].id)
+            card.style.borderRadius = '5px';
+            card.style.padding = '10px';
+            card.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+            
+
 
             var imageContainer = document.createElement('div');
             imageContainer.setAttribute('id', 'image-container-' + dataJSON[index].id);
@@ -86,37 +89,56 @@ var displayPosts = function (data) {
 
             imageContainer.append(image);
 
+            var likesContainer = document.createElement('div');
+            likesContainer.setAttribute('id', 'likes-container-' + dataJSON[index].id);
+            likesContainer.style.paddingLeft = '10px';
+            likesContainer.style.paddingRight = "10px";
+            likesContainer.style.paddingTop = "10px";
+            likesContainer.style.fontSize = "1.5em";
+            likesContainer.style.borderTop = "1px solid #969E99";            
+            var likesIcon = document.createElement('span');
+            likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+            likesContainer.append(likesIcon);
+            
+
             var titleContainer = document.createElement('div');
             titleContainer.setAttribute('id', 'title-container-' + dataJSON[index].id);
+            titleContainer.style.paddingLeft = '10px';
+            titleContainer.style.paddingRight = "10px";
             var title = document.createElement('p');
             title.innerText = dataJSON[index].title;
+            title.style.fontWeight = "bold";
             title.style.marginTop = "10px";
 
             titleContainer.append(title);
 
             var descriptionContainer = document.createElement('div');
             descriptionContainer.setAttribute('id', 'description-container-' + dataJSON[index].id);
+            descriptionContainer.style.paddingLeft = "10px";
+            descriptionContainer.style.paddingRight = "10px";
             var description = document.createElement('p');
             description.innerText = dataJSON[index].description;
             description.style.marginTop = "10px";
 
             descriptionContainer.append(description);
 
-            column.append(imageContainer);
-            column.append(titleContainer);
-            column.append(descriptionContainer);
-
+            card.append(imageContainer);
+            card.append(likesContainer);
+            card.append(titleContainer);
+            card.append(descriptionContainer);
+            column.append(card);
+            
             var postRow = document.getElementById('row-' + rowNumber);
             postRow.appendChild(column);
 
 
-            var images = document.createElement('img');
-            images.setAttribute('src', '/images/' + dataJSON[index].image + '.png');
-            images.setAttribute('image-id', dataJSON[index].id);
-            images.style.width = "25px";
-            images.style.height = "25px";
+            var extraImage = document.createElement('img');
+            extraImage.setAttribute('src', '/images/' + dataJSON[index].image + '.png');
+            extraImage.setAttribute('image-id', dataJSON[index].id);
+            extraImage.style.width = "25px";
+            extraImage.style.height = "25px";
 
-            images.addEventListener('click', function (event) {
+            extraImage.addEventListener('click', function (event) {
                 console.log(event.target.getAttribute('src'));
                 var imageSrc = event.target.getAttribute('src');
                 var imageId = event.target.getAttribute('image-id');
@@ -126,7 +148,7 @@ var displayPosts = function (data) {
 
             });
 
-            multipleImageContainer.append(images);
+            multipleImageContainer.append(extraImage);
 
             if ((postIndex % 3) == 0) {
                 rowNumber++;
@@ -141,7 +163,6 @@ var displayPosts = function (data) {
 
                 var row = document.createElement('div');
                 row.setAttribute('class', 'row');
-                row.style.marginTop = "10px";
                 row.setAttribute('id', 'row-' + rowNumber);
 
                 rowOfThree.append(row);
@@ -159,14 +180,15 @@ var displayPosts = function (data) {
             // imageContainer.style.width = "25px";
             // imageContainer.style.height = "25px";
             // imageContainer.style.cssFloat = "left";
-            var image = document.createElement('img');
-            image.setAttribute('src', '/images/' + dataJSON[index].image + '.png');
-            image.setAttribute('image-id', dataJSON[index].id);
-            image.style.width = "25px";
-            image.style.height = "25px";
+            var extraImage = document.createElement('img');
+            extraImage.setAttribute('src', '/images/' + dataJSON[index].image + '.png');
+            extraImage.setAttribute('image-id', dataJSON[index].id);
+            extraImage.style.width = "25px";
+            extraImage.style.height = "25px";
+            extraImage.style.marginLeft = "5px";
 
 
-            image.addEventListener('click', function (event) {
+            extraImage.addEventListener('click', function (event) {
                 console.log(event.target.getAttribute('src'));
                 var imageSrc = event.target.getAttribute('src');
                 var imageId = event.target.getAttribute('image-id');
@@ -176,7 +198,7 @@ var displayPosts = function (data) {
 
             });
             // imageContainer.append(image);
-            multipleImageContainer.append(image);
+            multipleImageContainer.append(extraImage);
 
         }
     }
@@ -200,6 +222,15 @@ var getAllPosts = function (pageNum) {
     displayPagination(totalPosts);
 
 
+}
+
+var getPostLikes = function(pid){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/posts/likes/" + pid, false); // false for synchronous request [DEPRECATED]
+    xmlHttp.send();
+    console.log("Post id: " + pid)
+    console.log(xmlHttp.responseText)
+    return xmlHttp.responseText;
 }
 
 var getTotalPostsNum = function () {

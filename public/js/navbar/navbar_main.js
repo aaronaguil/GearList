@@ -11,7 +11,7 @@ window.onload = function () {
         console.log("USER LOGGED IN : " + user);
         var logoutButton = document.getElementById('navbar-button-loggedIn-logout');
         var myAccountDropdown = document.getElementById('navbar-button-loggedIn-accountDropDown');
-        var loginButton = document.getElementById('navbar-button-loggedOut-login');
+        var loginButton = document.getElementById('navbar-button-loggedOut-loggedin');
         var registerButton = document.getElementById('navbar-button-loggedOut-register');
         var welcomeMessage = document.getElementById('loginModal-message-success');
         logoutButton.setAttribute('style', '');
@@ -29,8 +29,8 @@ window.onload = function () {
         console.log("account dropdown: " + myAccountDropdown);
         
         var loginButton = document.getElementById('loginModal-button-login');
-        loginButton.addEventListener("click", login);
-        console.log("login button: " + loginButton);
+        // loginButton.addEventListener("click", login);
+        console.log( loginButton);
         
         var registerButton = document.getElementById('registerModal-button-register');
         registerButton.addEventListener("click", register);

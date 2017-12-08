@@ -13,7 +13,7 @@ var logout = function () {
         var selector_loggedOutNavbarButtons = '[id^=navbar-button-loggedOut]';
         hideMatchingElements(selector_loggedInNavbarButtons);
         displayMatchingElements(selector_loggedOutNavbarButtons);
-        var login = document.getElementById('loginModal-button-submit');
+        var login = document.getElementById('loginModal-button-login');
         login.addEventListener('click', login);
         getAllPosts(1);
     }    

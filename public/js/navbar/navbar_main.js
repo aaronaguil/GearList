@@ -28,11 +28,11 @@ window.onload = function () {
         myAccountDropdown.style.display = 'none';
         console.log("account dropdown: " + myAccountDropdown);
         
-        var loginButton = document.getElementById('loginModal-button-submit');
+        var loginButton = document.getElementById('loginModal-button-login');
         loginButton.addEventListener("click", login);
         console.log("login button: " + loginButton);
         
-        var registerButton = document.getElementById('registerModal-button-submit');
+        var registerButton = document.getElementById('registerModal-button-register');
         registerButton.addEventListener("click", register);
         console.log("register button: " + registerButton)
      

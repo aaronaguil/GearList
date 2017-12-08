@@ -74,7 +74,7 @@ var displayPosts = function (data) {
             card.style.borderRadius = '5px';
             card.style.padding = '10px';
             card.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
-            
+
 
 
             var imageContainer = document.createElement('div');
@@ -94,12 +94,33 @@ var displayPosts = function (data) {
             likesContainer.style.paddingLeft = '10px';
             likesContainer.style.paddingRight = "10px";
             likesContainer.style.paddingTop = "10px";
-            likesContainer.style.fontSize = "1.5em";
-            likesContainer.style.borderTop = "1px solid #969E99";            
-            var likesIcon = document.createElement('span');
-            likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
-            likesContainer.append(likesIcon);
-            
+            likesContainer.style.borderTop = "1px solid #969E99";
+            if (numLikes == 0) {
+                var likesDiv = document.createElement('div');
+                var likesIcon = document.createElement('span');
+                likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                likesDiv.append(likesIcon)
+                likesContainer.append(likesDiv);
+            }
+            else {
+                var likesDiv = document.createElement('div');                
+                likesDiv.style.cssFloat = 'left';
+                likesDiv.style.marginRight = '10px';                
+                var numLikesDiv = document.createElement('div');                
+                numLikesDiv.style.marginTop = '1px';
+                var likesIcon = document.createElement('span');
+                likesIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                likesIcon.style.color = 'red';
+                likesIcon.style.fontSize = "1.5em";
+                var numberOfLikes = document.createElement('span');
+                numberOfLikes.innerText = numLikes;
+                likesDiv.append(likesIcon)
+                numLikesDiv.append(numberOfLikes)
+                likesContainer.append(likesDiv);
+                likesContainer.append(numLikesDiv);
+
+            }
+
 
             var titleContainer = document.createElement('div');
             titleContainer.setAttribute('id', 'title-container-' + dataJSON[index].id);
@@ -127,7 +148,7 @@ var displayPosts = function (data) {
             card.append(titleContainer);
             card.append(descriptionContainer);
             column.append(card);
-            
+
             var postRow = document.getElementById('row-' + rowNumber);
             postRow.appendChild(column);
 
@@ -224,7 +245,7 @@ var getAllPosts = function (pageNum) {
 
 }
 
-var getPostLikes = function(pid){
+var getPostLikes = function (pid) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "/posts/likes/" + pid, false); // false for synchronous request [DEPRECATED]
     xmlHttp.send();
@@ -267,7 +288,7 @@ var displayPagination = function (totalPosts) {
             pageNums.style.textDecoration = 'underlined';
             pageNums.style.marginLeft = '35px';
             pageNums.style.fontSize = '2em';
-            pageNums.addEventListener('click', function(event){
+            pageNums.addEventListener('click', function (event) {
                 var page = event.target.getAttribute('id');
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", "/posts/" + page, false); // false for synchronous request [DEPRECATED]
@@ -275,7 +296,7 @@ var displayPagination = function (totalPosts) {
                 console.log(xmlHttp.status)
                 console.log(xmlHttp.responseText)
                 displayPosts(xmlHttp.responseText);
-            
+
                 var totalPosts = getTotalPostsNum();
                 displayPagination(totalPosts);
             })
@@ -284,7 +305,7 @@ var displayPagination = function (totalPosts) {
             bodyContainer.append(paginationContainer);
         }
     }
-    else{
+    else {
         for (var i = 1; i <= 10; i++) {
             var pageNums = document.createElement('a');
             pageNums.innerText = i;
@@ -292,7 +313,7 @@ var displayPagination = function (totalPosts) {
             pageNums.style.textDecoration = 'underlined';
             pageNums.style.marginLeft = '35px';
             pageNums.style.fontSize = '2em';
-            pageNums.addEventListener('click', function(event){
+            pageNums.addEventListener('click', function (event) {
                 var page = event.target.getAttribute('id');
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open("GET", "/posts/" + page, false); // false for synchronous request [DEPRECATED]
@@ -300,7 +321,7 @@ var displayPagination = function (totalPosts) {
                 console.log(xmlHttp.status)
                 console.log(xmlHttp.responseText)
                 displayPosts(xmlHttp.responseText);
-            
+
                 var totalPosts = getTotalPostsNum();
                 displayPagination(totalPosts);
             })
@@ -311,10 +332,10 @@ var displayPagination = function (totalPosts) {
             var pageNums = document.createElement('a');
             pageNums.innerText = '.';
             pageNums.style.textDecoration = 'none';
-            if(i==1){
+            if (i == 1) {
                 pageNums.style.marginLeft = '20px';
             }
-            else{
+            else {
                 pageNums.style.marginLeft = '5px';
             }
             pageNums.style.fontSize = '2em';
@@ -327,7 +348,7 @@ var displayPagination = function (totalPosts) {
         pageNums.style.marginLeft = '20px';
         pageNums.style.fontSize = '2em';
         paginationContainer.append(pageNums);
-        
+
         bodyContainer.append(paginationContainer);
     }
 }

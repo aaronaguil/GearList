@@ -3,12 +3,17 @@ var getPosts = function (id) {
     xmlHttp.open("GET", "/posts/user/" + id, false); // false for synchronous request [DEPRECATED]
     xmlHttp.send();
     console.log(xmlHttp.status)
-    console.log(xmlHttp.responseText)
+    // console.log(xmlHttp.responseText)
     displayPosts(xmlHttp.responseText);
 }
 
 
 var displayPosts = function (data) {
+
+
+
+    var user = auth();
+
 
 
     var previousPostId = 0;
@@ -102,9 +107,35 @@ var displayPosts = function (data) {
                 var likeWordDiv = document.createElement('div');
                 likeWordDiv.style.marginTop = '-1px';
                 var likesIcon = document.createElement('span');
+                likesIcon.style.fontSize = "1.5em";    
+                likesIcon.setAttribute('postId', dataJSON[index].id)                
                 likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                console.log(user)
+                if(user){
+                    likesIcon.addEventListener('click', function(event){
+                        var likeIcon = event.target;
+                        likeIcon.style.color = 'red';
+                        likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                        var postId = event.target.getAttribute('postId');
+                        console.log(postId)
+                        var numInfo = document.getElementById('like-word-or-num-' + postId);
+                        console.log(numInfo)
+                        if(numInfo.innerText == 'Like'){
+                            numInfo.innerText = "1";
+                        }
+                        else{
+                            numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                        }
 
+                    })
+                }
+                else{
+                    likesIcon.addEventListener('click', function(event){
+                        console.log('logged out')
+                    })
+                }
                 var likeWord = document.createElement('span');
+                likeWord.setAttribute('id', 'like-word-or-num-' + dataJSON[index].id);
                 likeWord.innerText = 'Like';
 
                 likeWordDiv.append(likeWord);
@@ -119,10 +150,35 @@ var displayPosts = function (data) {
                 var numLikesDiv = document.createElement('div');                
                 numLikesDiv.style.marginTop = '1px';
                 var likesIcon = document.createElement('span');
-                likesIcon.setAttribute('class', 'glyphicon glyphicon-heart');
-                likesIcon.style.color = 'red';
+                likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                likesIcon.setAttribute('postId', dataJSON[index].id)
                 likesIcon.style.fontSize = "1.5em";
+                console.log(user)
+                if(user){
+                    likesIcon.addEventListener('click', function(event){
+                        var likeIcon = event.target;
+                        likeIcon.style.color = 'red';
+                        likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                        var postId = event.target.getAttribute('postId');
+                        console.log(postId)
+                        var numInfo = document.getElementById('like-word-or-num-' + postId);
+                        console.log(numInfo)
+                        if(numInfo.innerText == 'Like'){
+                            numInfo.innerText = "1";
+                        }
+                        else{
+                            numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                        }
+                    })
+                }
+                else{
+                    likesIcon.addEventListener('click', function(event){
+                        console.log('logged out')
+                    })
+                }
+
                 var numberOfLikes = document.createElement('span');
+                numberOfLikes.setAttribute('id', 'like-word-or-num-' + dataJSON[index].id);
                 numberOfLikes.innerText = numLikes;
                 likesDiv.append(likesIcon)
                 numLikesDiv.append(numberOfLikes)

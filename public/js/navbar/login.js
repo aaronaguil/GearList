@@ -3,6 +3,7 @@
 //    return "Login";
 //  }
 
+
 var login = function () {
   console.log("****IN navbar.js LOGIN****")
   
@@ -22,7 +23,7 @@ var login = function () {
   xmlHttp.setRequestHeader("Content-Type", "application/json");
   xmlHttp.send(JSON.stringify(user));
   console.log(xmlHttp.status)
-  console.log(xmlHttp.responseText)
+  // console.log(xmlHttp.responseText)
   
   if (xmlHttp.status == '200' && xmlHttp.responseText != 'invalid'){
       console.log("USER LOGGED IN SUCCESSFULLY: " + username);
@@ -34,6 +35,9 @@ var login = function () {
       hideMatchingElements(selector_loggedOutNavbarButtons);
       hideMatchingElements(selector_loginModalMessages);
       welcomeMessage.style.display = "block";
+      console.log("auth function call")
+      user = auth();
+      console.log(user)
       getPosts(xmlHttp.responseText);
   } else if(xmlHttp.responseText == "invalid"){
       console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);

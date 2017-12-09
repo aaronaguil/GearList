@@ -1,10 +1,9 @@
 console.log("***RUNNING NAVBAR.JS****");
-var user = {};
 
 window.onload = function () {
     console.log("****IN navbar.js ONLOAD****");
     
-    var user = auth();
+    user = auth();
     
     var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";
     var selector_loggedOutNavbarButtons = "[id^=navbar-button-loggedOut]";
@@ -33,8 +32,6 @@ var auth = function(){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", "/auth/user", false); // false for synchronous request [DEPRECATED]
     xmlHttp.send();
-    console.log("status: " + xmlHttp.status)
-    console.log("response text: " + xmlHttp.responseText)
 
     if(xmlHttp.responseText){
         return xmlHttp.responseText;

@@ -14,6 +14,7 @@ var logout = function () {
         hideMatchingElements(selector_loggedInNavbarButtons);
         displayMatchingElements(selector_loggedOutNavbarButtons);
         var login = document.getElementById('loginModal-button-login');
+        user = null;
         getAllPosts(1);
     }    
 }

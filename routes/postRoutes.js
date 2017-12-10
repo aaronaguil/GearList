@@ -8,9 +8,10 @@ router.post('/post/submit', function (req, res) {
     postController.createPost(req, res);
  })
 
-router.get('/posts/user/:id', function (req, res) {
+router.get('/posts/user/:id/:pageNum', function (req, res, pageNum) {
     var uid = req.params.id;
-    postController.getUserPosts(req, res, uid);
+    var pageNum = req.params.pageNum;
+    postController.getUserPosts(req, res, uid, pageNum);
  })
  
  router.get('/posts/total', function (req, res) {
@@ -21,6 +22,24 @@ router.get('/posts/user/:id', function (req, res) {
 router.get('/posts/:pageNum', function (req, res) {
     var pageNum = req.params.pageNum;
     postController.getAllPosts(req, res, pageNum);
+ })
+
+router.post('/post/like/user/add/:uid/:pid', function (req, res) {
+    var uid = req.params.uid;
+    var pid = req.params.pid;
+    postController.userLikedPost(req, res, uid, pid);
+ })
+
+router.post('/post/like/user/delete/:uid/:pid', function (req, res) {
+    var uid = req.params.uid;
+    var pid = req.params.pid;
+    postController.userUnlikedPost(req, res, uid, pid);
+ })
+
+router.get('/posts/likes/user/:uid/:pid', function (req, res) {
+    var uid = req.params.uid;
+    var pid = req.params.pid;
+    postController.getUserPostLikes(req, res, uid, pid);
  })
 
 router.get('/posts/likes/:pid', function (req, res) {

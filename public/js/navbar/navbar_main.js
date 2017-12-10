@@ -2,7 +2,22 @@ console.log("***RUNNING NAVBAR.JS****");
 
 window.onload = function () {
     console.log("****IN navbar.js ONLOAD****");
-    
+    console.log($("#body-container"))
+    $(window).scroll(function() {
+        console.log($(window).scrollTop());
+        console.log($(document).height())
+        if(($(document).height()-$(window).scrollTop()) < 1000){
+            console.log('almost done')
+            getAllPosts(2);
+        }
+        // var screenheight = parseInt($(document).height());
+        // var scrolledpx = parseInt($("#body-container").scrollTop());     
+        // var sum = screenheight+scrolledpx;
+        // console.log($("div#container").scrollTop());
+        // console.log("screen: " + screenheight);
+        // console.log("sum=" + sum);
+        // $("div.content").height(sum);
+})
     user = auth();
     
     var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";

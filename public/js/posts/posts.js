@@ -1,6 +1,6 @@
 var getPosts = function (id) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/posts/user/" + id, false); // false for synchronous request [DEPRECATED]
+    xmlHttp.open("GET", "/posts/user/" + id + "/1/", false); // false for synchronous request [DEPRECATED]
     xmlHttp.send();
     console.log(xmlHttp.status)
     // console.log(xmlHttp.responseText)
@@ -11,10 +11,10 @@ var getPosts = function (id) {
 var displayPosts = function (data) {
 
 
-
+   
     var user = auth();
-
-
+  
+    // console.log(xmlHttp.responseText)
 
     var previousPostId = 0;
     var rowNumber = 1;
@@ -24,7 +24,11 @@ var displayPosts = function (data) {
     var bodyContainer = document.getElementById('body-container');
     bodyContainer.innerText = '';
     var dataJSON = JSON.parse(data);
-
+    if(dataJSON){
+        console.log('********************************')
+        console.log(dataJSON[0])
+        console.log('********************************')
+    }
     var rowContainer = document.createElement('div');
     rowContainer.setAttribute('class', 'row');
     rowContainer.setAttribute('id', 'rowContainer-' + rowNumber);
@@ -48,12 +52,10 @@ var displayPosts = function (data) {
     multipleImageContainer.style.marginTop = '10px';
 
     for (var index = 0; index < dataJSON.length; index++) {
-        console.log('**************** ' + dataJSON[index].id)
         if (previousPostId != dataJSON[index].id) {
-
+            console.log(dataJSON[index])
             //gets the number of likes of post based on post id
-            var numLikesString = getPostLikes(dataJSON[index].id);
-            var numLikes = JSON.parse(numLikesString);
+            var numLikes = dataJSON[index].likes;
 
             if (previousPostId != 0) {
                 var columnContainer = document.getElementById('container-' + previousPostId);
@@ -100,6 +102,10 @@ var displayPosts = function (data) {
             likesContainer.style.paddingRight = "10px";
             likesContainer.style.paddingTop = "10px";
             likesContainer.style.borderTop = "1px solid #969E99";
+
+
+            console.log("numLikes")
+            console.log(numLikes)
             if (numLikes == 0) {
                 var likesDiv = document.createElement('div');
                 likesDiv.style.cssFloat = 'left';
@@ -111,20 +117,51 @@ var displayPosts = function (data) {
                 likesIcon.setAttribute('postId', dataJSON[index].id)                
                 likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
                 console.log(user)
-                if(user){
+
+                if(dataJSON[index].user_liked == '1' || dataJSON[index].user_liked == '0'){
                     likesIcon.addEventListener('click', function(event){
-                        var likeIcon = event.target;
-                        likeIcon.style.color = 'red';
-                        likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
-                        var postId = event.target.getAttribute('postId');
-                        console.log(postId)
-                        var numInfo = document.getElementById('like-word-or-num-' + postId);
-                        console.log(numInfo)
-                        if(numInfo.innerText == 'Like'){
-                            numInfo.innerText = "1";
+                        var user = auth();
+                        var pid = event.target.getAttribute('postId');  
+                        console.log(pid)                      
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open("GET", "/posts/likes/user/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                        xmlHttp.send();
+                        var userCurrentlyLikePost = xmlHttp.responseText;
+                    
+                        if(userCurrentlyLikePost == 'TRUE'){
+                            var likeIcon = event.target;
+                            likeIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                            likeIcon.style.color = "black";
+                            console.log(pid)
+                            var numInfo = document.getElementById('like-word-or-num-' + pid);
+                            console.log(numInfo)
+                        
+                            numInfo.innerText = JSON.parse(numInfo.innerText) - 1;
+
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("POST", "/post/like/user/delete/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                            xmlHttp.send();
+                            var userCurrentlyLikePost = xmlHttp.responseText;
                         }
                         else{
-                            numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                            var likeIcon = event.target;
+                            likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                            likeIcon.style.color = "red";
+                            console.log(pid)
+                            var numInfo = document.getElementById('like-word-or-num-' + pid);
+                            console.log(numInfo)
+
+                            if(numInfo.innerText == 'Like'){
+                                numInfo.innerText = "1";
+                            }
+                            else{
+                                numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                            }
+
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("POST", "/post/like/user/add/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                            xmlHttp.send();
+                            var userCurrentlyLikePost = xmlHttp.responseText;
                         }
 
                     })
@@ -150,28 +187,128 @@ var displayPosts = function (data) {
                 var numLikesDiv = document.createElement('div');                
                 numLikesDiv.style.marginTop = '1px';
                 var likesIcon = document.createElement('span');
-                likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
                 likesIcon.setAttribute('postId', dataJSON[index].id)
                 likesIcon.style.fontSize = "1.5em";
-                console.log(user)
-                if(user){
-                    likesIcon.addEventListener('click', function(event){
-                        var likeIcon = event.target;
-                        likeIcon.style.color = 'red';
-                        likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
-                        var postId = event.target.getAttribute('postId');
-                        console.log(postId)
-                        var numInfo = document.getElementById('like-word-or-num-' + postId);
-                        console.log(numInfo)
-                        if(numInfo.innerText == 'Like'){
-                            numInfo.innerText = "1";
-                        }
-                        else{
-                            numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
-                        }
-                    })
+                console.log('data user liked')
+                console.log(dataJSON[index].user_liked)
+                if(dataJSON[index].user_liked == '1' || dataJSON[index].user_liked == '0'){
+                    
+                    // var xmlHttp = new XMLHttpRequest();
+                    // xmlHttp.open("GET", "/posts/likes/user/" + JSON.parse(user).id + "/" + dataJSON[index].id, false); // false for synchronous request [DEPRECATED]
+                    // xmlHttp.send();
+                    // var userLikePost = xmlHttp.responseText;
+                    console.log(dataJSON[index].id)
+                    console.log(dataJSON[index].user_liked)
+                    if(dataJSON[index].user_liked == '1'){
+                        likesIcon.style.color = 'red';
+                        likesIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+
+                        likesIcon.addEventListener('click', function(event){
+                            var user = auth();
+                            console.log(JSON.parse(user).id)
+                            var pid = event.target.getAttribute('postId');
+                            console.log(pid)  
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "/posts/likes/user/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                            xmlHttp.send();
+                            var userCurrentlyLikePost = xmlHttp.responseText;
+                        
+                            if(userCurrentlyLikePost == 'TRUE'){
+                                var likeIcon = event.target;
+                                likeIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                                likeIcon.style.color = "black";
+                                console.log(pid)
+                                var numInfo = document.getElementById('like-word-or-num-' + pid);
+                                console.log(numInfo)
+                            
+                                numInfo.innerText = JSON.parse(numInfo.innerText) - 1;
+
+                                var xmlHttp = new XMLHttpRequest();
+                                xmlHttp.open("POST", "/post/like/user/delete/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                                xmlHttp.send();
+                                var userCurrentlyLikePost = xmlHttp.responseText;
+                            }
+                            else{
+                                var likeIcon = event.target;
+                                likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                                likeIcon.style.color = "red";
+                                console.log(pid)
+                                var numInfo = document.getElementById('like-word-or-num-' + pid);
+                                console.log(numInfo)
+
+                                if(numInfo.innerText == 'Like'){
+                                    numInfo.innerText = "1";
+                                }
+                                else{
+                                    numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                                }
+
+                                var xmlHttp = new XMLHttpRequest();
+                                xmlHttp.open("POST", "/post/like/user/add/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                                xmlHttp.send();
+                                var userCurrentlyLikePost = xmlHttp.responseText;
+                            }
+                       
+                        
+                        })
+                    }
+                    else{
+                        likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+
+                        likesIcon.addEventListener('click', function(event){
+                            var user = auth();
+                            console.log(JSON.parse(user).id)
+                            var pid = event.target.getAttribute('postId');
+                            console.log(pid)  
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "/posts/likes/user/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                            xmlHttp.send();
+                            var userCurrentlyLikePost = xmlHttp.responseText;
+                        
+                            if(userCurrentlyLikePost == 'TRUE'){
+                                console.log('it equals true')
+                                var likeIcon = event.target;
+                                likeIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
+                                likeIcon.style.color = "black";
+                                console.log(pid)
+                                var numInfo = document.getElementById('like-word-or-num-' + pid);
+                                console.log(numInfo)
+                            
+                                numInfo.innerText = JSON.parse(numInfo.innerText) - 1;
+
+                                var xmlHttp = new XMLHttpRequest();
+                                xmlHttp.open("POST", "/post/like/user/delete/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                                xmlHttp.send();
+                                var userCurrentlyLikePost = xmlHttp.responseText;
+                            }
+                            else{
+                                var likeIcon = event.target;
+                                likeIcon.setAttribute('class', 'glyphicon glyphicon-heart');
+                                likeIcon.style.color = "red";
+                                console.log(pid)
+                                var numInfo = document.getElementById('like-word-or-num-' + pid);
+                                console.log(numInfo)
+
+                                if(numInfo.innerText == 'Like'){
+                                    numInfo.innerText = "1";
+                                }
+                                else{
+                                    numInfo.innerText = JSON.parse(numInfo.innerText) + 1;
+                                }
+
+                                var xmlHttp = new XMLHttpRequest();
+                                xmlHttp.open("POST", "/post/like/user/add/" + JSON.parse(user).id + "/" + JSON.parse(pid), false); // false for synchronous request [DEPRECATED]
+                                xmlHttp.send();
+                                var userCurrentlyLikePost = xmlHttp.responseText;
+                            }
+                       
+                        
+                        })
+                    }
+                    
                 }
                 else{
+                    likesIcon.setAttribute('class', 'glyphicon glyphicon-heart-empty');
                     likesIcon.addEventListener('click', function(event){
                         console.log('logged out')
                     })
@@ -291,6 +428,7 @@ var displayPosts = function (data) {
     }
 
     console.log('testNum: ' + testNum);
+    console.log("**************************************")
 }
 
 
@@ -311,14 +449,6 @@ var getAllPosts = function (pageNum) {
 
 }
 
-var getPostLikes = function (pid) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/posts/likes/" + pid, false); // false for synchronous request [DEPRECATED]
-    xmlHttp.send();
-    console.log("Post id: " + pid)
-    console.log(xmlHttp.responseText)
-    return xmlHttp.responseText;
-}
 
 var getTotalPostsNum = function () {
     console.log('testing')

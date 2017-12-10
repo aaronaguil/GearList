@@ -9,8 +9,8 @@ exports.createPost = function(req, res){
     dao.createPost(req, res);
 }
 
-exports.getUserPosts = function(req, res, uid){
-    dao.getUserPosts(req, res, uid);
+exports.getUserPosts = function(req, res, uid, pageNum){
+    dao.getUserPosts(req, res, uid, pageNum);
 }
 
 exports.getAllPosts = function(req, res, pageNum){
@@ -24,4 +24,17 @@ exports.getTotalPosts = function(req, res){
 
 exports.getPostsLikes = function(req, res, pid){
     dao.getPostsLikes(req, res, pid);
+}
+
+exports.userLikedPost = function(req, res, uid, pid){
+    dao.userLikedPost(req, res, uid, pid);
+}
+
+exports.userUnlikedPost = function(req, res, uid, pid){
+    dao.userUnlikedPost(req, res, uid, pid);
+}
+
+exports.getUserPostLikes = function(req, res, uid, pid){
+    
+    dao.getUserPostLikes(req, res, uid, pid);
 }

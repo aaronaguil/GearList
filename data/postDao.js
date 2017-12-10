@@ -36,15 +36,26 @@ exports.createPost = function (req, res) {
     res.send();
 }
 
-exports.getUserPosts = function (req, res, uid) {
-    connection.query("SELECT p.id, p.title, p.description, i.image FROM POST p JOIN FOLDER f  ON f.id = p.folder_id JOIN IMAGE i ON i.post_id = p.id WHERE f.user_id = " + uid + ";",
+exports.getUserPosts = function (req, res, uid, pageNum) {
+    var min = ((pageNum - 1) * 100);
+
+    console.log("select p.id,  p.title, p.description, (select image from image where post_id = p.id limit 1) as image, (select count(id) from user_like_post where post_id = p.id) as likes, (select count(id) from user_like_post"
+    + " where user_id = " + uid + " and post_id = p.id) as user_liked, p.timestamp from user_followed_folder uff join folder f on f.id = uff.folder_id join post p on p.folder_id = f.id where uff.user_id = " + uid
+    + " and p.timestamp != '0000-00-00 00:00:00' order by p.timestamp desc limit " + min + ", 100;");
+
+    connection.query("select p.id,  p.title, p.description, (select image from image where post_id = p.id limit 1) as image, (select count(id) from user_like_post where post_id = p.id) as likes, (select count(id) from user_like_post"
+    + " where user_id = " + uid + " and post_id = p.id) as user_liked, p.timestamp from user_followed_folder uff join folder f on f.id = uff.folder_id join post p on p.folder_id = f.id where uff.user_id = " + uid
+    + " and p.timestamp != '0000-00-00 00:00:00' order by p.timestamp desc limit " + min + ", 100;",
         function (err, posts) {
-            console.log("result length: " + posts.length)
+            console.log(err)
             var strPosts = JSON.stringify(posts);
-            console.log("str: " + JSON.stringify(strPosts))
             var postsJSON = JSON.parse(strPosts);
-            for (var i = 0; i < posts.length; i++) {
-                console.log(postsJSON[i])
+            for(var i = 0; i <postsJSON.length; i++){
+                if(postsJSON[i].user_liked == '1'){
+                    console.log('*********************************')
+                    console.log(postsJSON[i])
+                    console.log('*********************************')
+                }
             }
             // console.log(postsJSON)
             res.send(postsJSON);
@@ -57,30 +68,53 @@ exports.getPostsLikes = function (req, res, pid) {
             var strLikesCount = JSON.stringify(likes[0]);
             var likesCountJSON = JSON.parse(strLikesCount);
             var totalPostLikes = likesCountJSON.COUNT
-            console.log("test")
-            console.log(strLikesCount);
             res.send(JSON.stringify(totalPostLikes));
         });
 }
 
+exports.getUserPostLikes = function (req, res, uid, pid) {
+    connection.query("SELECT id FROM USER_LIKE_POST WHERE user_id = " + uid + " and post_id = " + pid + ";",
+        function (err, userLiked) {
+            
+            if(userLiked.length == 0){
+                res.send("FALSE")
+            }
+            else{
+                res.send("TRUE")
+            }
+        });
+}
+
+exports.userLikedPost = function (req, res, uid, pid) {
+    var date = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+    connection.query("INSERT INTO USER_LIKE_POST (timestamp, user_id, post_id) VALUES('" + date + "', " + uid + ", " + pid + ");",
+        function (err, userLiked) {
+            if(err) console.log(err);
+          res.send("updated");
+        });
+}
+
+exports.userUnlikedPost = function (req, res, uid, pid) {
+    connection.query("DELETE FROM USER_LIKE_POST WHERE user_id = " + uid + " and post_id = " + pid + ";",
+        function (err, userLiked) {
+            if(err) console.log(err);            
+            res.send("updated")
+        });
+}
+
 exports.getAllPosts = function (req, res, pageNum) {
-    var min = ((pageNum - 1) * 100) + 1;
+    var min = ((pageNum - 1) * 100);
     connection.query("SELECT COUNT(id) AS COUNT FROM POST",
         function (err, count) {
             var strCount = JSON.stringify(count[0]);
             var countJSON = JSON.parse(strCount);
             totalPosts = countJSON.COUNT
-            console.log("totalPosts: " + totalPosts);
 
-            connection.query("SELECT p.id, p.title, p.description, i.image FROM POST p JOIN IMAGE i ON i.post_id = p.id  GROUP BY p.id limit " + min + ", 100;",
+            connection.query("select p.id, p.title, p.description, (select image from image where post_id = p.id limit 1) as image, (select count(id) from user_like_post where post_id = p.id) as likes, p.timestamp from post p where "
+            + "p.timestamp != '0000-00-00 00:00:00' order by p.timestamp limit " + min + ", 100;",
                 function (err, posts) {
-                    console.log("result length: " + posts.length)
                     var strPosts = JSON.stringify(posts);
-                    // console.log("str: " + JSON.stringify(strPosts))
                     var postsJSON = JSON.parse(strPosts);
-                    for (var i = 0; i < posts.length; i++) {
-                        console.log(postsJSON[i])
-                    }
                     // console.log(postsJSON)
                     res.send(postsJSON);
                 });

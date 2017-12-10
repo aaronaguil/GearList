@@ -38,7 +38,7 @@ var login = function () {
       console.log("auth function call")
       user = auth();
       console.log(user)
-      getPosts(xmlHttp.responseText);
+      getUserFollowedPosts(xmlHttp.responseText);
   } else if(xmlHttp.responseText == "invalid"){
       console.log("USER ATTEMPTED TO LOG IN UNSUCCESSFULLY: " + username);
       var errorMessage = document.getElementById('loginModal-message-error');

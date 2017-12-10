@@ -1,14 +1,21 @@
 console.log("***RUNNING NAVBAR.JS****");
 
 window.onload = function () {
+    user = auth();
     console.log("****IN navbar.js ONLOAD****");
     console.log($("#body-container"))
     $(window).scroll(function() {
         console.log($(window).scrollTop());
         console.log($(document).height())
-        if(($(document).height()-$(window).scrollTop()) < 1000){
+        if(($(document).height()-$(window).scrollTop()) < 2000){
             console.log('almost done')
-            getAllPosts(2);
+            if(user){
+                console.log(user);
+                getMorePosts(JSON.parse(user).id);
+            }
+            else{
+                getMorePosts();
+            }
         }
         // var screenheight = parseInt($(document).height());
         // var scrolledpx = parseInt($("#body-container").scrollTop());     
@@ -17,15 +24,14 @@ window.onload = function () {
         // console.log("screen: " + screenheight);
         // console.log("sum=" + sum);
         // $("div.content").height(sum);
-})
-    user = auth();
+    })
     
     var selector_loggedInNavbarButtons = "[id^=navbar-button-loggedIn]";
     var selector_loggedOutNavbarButtons = "[id^=navbar-button-loggedOut]";
     if(user){        
         displayMatchingElements(selector_loggedInNavbarButtons);
         hideMatchingElements(selector_loggedOutNavbarButtons);
-        getPosts(JSON.parse(user).id);
+        getUserFollowedPosts(JSON.parse(user).id);
     }
     else{
         displayMatchingElements(selector_loggedOutNavbarButtons);

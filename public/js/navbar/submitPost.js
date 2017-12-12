@@ -1,5 +1,5 @@
 var submitPost = function(event) {
-    console.log("****IN navbar.js SUBMITPOST****");
+    console.log("****IN navbar/submitPost****");
     
     var titleInput = document.getElementById('titleInputBox').value;
     var descriptionInput = document.getElementById('descriptionInputBox').value;

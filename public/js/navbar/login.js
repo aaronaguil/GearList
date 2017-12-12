@@ -5,7 +5,7 @@
 
 
 var login = function () {
-  console.log("****IN navbar.js LOGIN****")
+  console.log("****IN navbar/login****")
   
   var username = document.getElementById('loginModal-input-username').value;
   var password = document.getElementById('loginModal-input-password').value;

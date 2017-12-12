@@ -1,5 +1,5 @@
 var createPost = function(event) {
-    console.log("****IN navbar.js CREATEPOSTFORM****");
+    console.log("****IN navbar/createPost****");
     
     var createPostButton = document.getElementById('navbar-button-loggedIn-createPost');     
     var selector_AllNavbarButtons = "[id^=navbar-button]";

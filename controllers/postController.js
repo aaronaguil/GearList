@@ -38,3 +38,18 @@ exports.getUserPostLikes = function(req, res, uid, pid){
     
     dao.getUserPostLikes(req, res, uid, pid);
 }
+
+exports.getPostComments = function(req, res){
+    
+    dao.getPostComments(req, res);
+}
+
+exports.getPostById = function(req, res){
+    
+    dao.getPostById(req, res);
+}
+
+exports.getPostImages = function(req, res){
+    
+    dao.getPostImages(req, res);
+}

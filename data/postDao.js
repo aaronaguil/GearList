@@ -36,6 +36,19 @@ exports.createPost = function (req, res) {
     res.send();
 }
 
+
+exports.getPostById = function(req, res){
+    connection.query("select * from Post where id = " + req.params.id + ";",
+        function (err, post) {
+            console.log(err)
+            var strPost = JSON.stringify(post[0]);
+            var postJSON = JSON.parse(strPost);
+            
+            console.log(postJSON)
+            res.send(postJSON);
+        });
+}
+
 exports.getUserPosts = function (req, res, uid, pageNum) {
     var min = ((pageNum - 1) * 100);
 
@@ -69,6 +82,30 @@ exports.getPostsLikes = function (req, res, pid) {
             var likesCountJSON = JSON.parse(strLikesCount);
             var totalPostLikes = likesCountJSON.COUNT
             res.send(JSON.stringify(totalPostLikes));
+        });
+}
+
+exports.getPostComments = function (req, res) {
+    console.log("SELECT c.id, c.comment, (select u.first_name from user u where u.id = c.user_id) AS cUsername, (select count(r.id) from reply r where r.comment_id = c.id) as numReplies FROM comment c WHERE post_id = " + req.params.id + ";")
+    connection.query("SELECT c.id, c.comment, (select u.first_name from user u where u.id = c.user_id) AS cUsername, (select count(r.id) from reply r where r.comment_id = c.id) as numReplies FROM comment c WHERE post_id = " + req.params.id + ";",
+        function (err, comments) {
+            var strComments = JSON.stringify(comments);
+            console.log(strComments)
+            var commentsJSON = JSON.parse(strComments);
+            for(var i = 0; i<commentsJSON.length; i++){
+                console.log('***************Comment*******************')
+                console.log(commentsJSON[i]);
+            }
+            res.send(commentsJSON);
+        });
+}
+
+exports.getPostImages = function (req, res) {
+    connection.query("SELECT * from Image where post_id =  " + req.params.id + ";",
+        function (err, images) {
+            var strImages = JSON.stringify(images);
+            var imagesJSON = JSON.parse(strImages);
+            res.send(imagesJSON);
         });
 }
 

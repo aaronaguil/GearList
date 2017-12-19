@@ -18,6 +18,18 @@ router.get('/posts/user/:id/:pageNum', function (req, res, pageNum) {
      console.log('in /posts/total')
      postController.getTotalPosts(req, res);
   })
+ 
+ router.get('/post/:id', function (req, res) {
+     postController.getPostById(req, res);
+  })
+ 
+ router.get('/post/comments/:id', function (req, res) {
+     postController.getPostComments(req, res);
+  })
+ 
+ router.get('/post/images/:id', function (req, res) {
+     postController.getPostImages(req, res);
+  })
 
 router.get('/posts/:pageNum', function (req, res) {
     var pageNum = req.params.pageNum;
